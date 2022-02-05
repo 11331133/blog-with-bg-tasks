@@ -15,3 +15,9 @@ export type createdPostDTO = {
 };
 
 export type findPostsByIdsDTO = number[];
+
+export type updatePostDTO = {
+  id: number;
+  title: Pick<Post, 'title'>;
+  body: Pick<Post, 'title'>;
+};

@@ -1,4 +1,9 @@
-import { createdPostDTO, createPostDTO, findPostsByIdsDTO } from './post.dto';
+import {
+  createdPostDTO,
+  createPostDTO,
+  findPostsByIdsDTO,
+  updatePostDTO,
+} from './post.dto';
 import Post from './post.entity';
 import { postRepository } from './postRepository.interface';
 
@@ -31,15 +36,11 @@ export class PostService {
     return await this._postRepository.findByIds(ids);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  public async update(updatePostDTO: updatePostDTO) {
+    return await this._postRepository.update(updatePostDTO);
   }
 
-  update(id: number, updatePostInput: UpdatePostInput) {
-    return `This action updates a #${id} post`;
-  }
-
-  remove(id: number) {
+  public async remove(id: number) {
     return `This action removes a #${id} post`;
   }
 }
