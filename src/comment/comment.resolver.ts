@@ -24,7 +24,10 @@ export class CommentResolver {
 
   @Mutation('updateComment')
   update(@Args('updateCommentInput') updateCommentInput: UpdateCommentInput) {
-    return this.commentService.update(updateCommentInput.id, updateCommentInput);
+    return this.commentService.update(
+      updateCommentInput.id,
+      updateCommentInput,
+    );
   }
 
   @Mutation('removeComment')
