@@ -1,4 +1,4 @@
-export class Post {
+export default class Post {
   constructor(
     private _title: string,
     private _body: string,

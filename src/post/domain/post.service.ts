@@ -1,11 +1,29 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePostInput } from './dto/create-post.input';
-import { UpdatePostInput } from './dto/update-post.input';
+import { createdPostDTO, createPostDTO } from './post.dto';
+import { postRepository } from './postRepository.interface';
 
-@Injectable()
 export class PostService {
-  create(createPostInput: CreatePostInput) {
-    return 'This action adds a new post';
+  constructor(private readonly _postRepository: postRepository) {}
+
+  public async create(
+    { title, body, publishedAt = new Date() }: createPostDTO,
+    authorNickname: string,
+  ): Promise<createdPostDTO> {
+    const postId = await this._postRepository.create(
+      {
+        title,
+        body,
+        publishedAt,
+      },
+      authorNickname,
+    );
+
+    return {
+      id: postId,
+      title,
+      body,
+      publishedAt,
+      authorNickname,
+    };
   }
 
   findAll() {
