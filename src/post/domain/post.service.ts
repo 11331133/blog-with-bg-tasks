@@ -1,9 +1,5 @@
-import {
-  createdPostDTO,
-  createPostDTO,
-  findPostsByIdsDTO,
-  updatePostDTO,
-} from './post.dto';
+import { Paginated } from 'src/utils/paginated.type';
+import { createPostDTO, updatePostDTO } from './post.dto';
 import Post from './post.entity';
 import { postRepository } from './postRepository.interface';
 
@@ -13,8 +9,8 @@ export class PostService {
   public async create(
     { title, body, publishedAt = new Date() }: createPostDTO,
     authorNickname: string,
-  ): Promise<createdPostDTO> {
-    const postId = await this._postRepository.create(
+  ): Promise<Post> {
+    return await this._postRepository.create(
       {
         title,
         body,
@@ -22,21 +18,16 @@ export class PostService {
       },
       authorNickname,
     );
-
-    return {
-      id: postId,
-      title,
-      body,
-      publishedAt,
-      authorNickname,
-    };
   }
 
-  public async findByIds(ids: findPostsByIdsDTO): Promise<Post[]> {
+  public async findByIds(ids: number[]): Promise<Post[]> {
     return await this._postRepository.findByIds(ids);
   }
 
-  public async findPaginated(pageNo: number, pageSize: number) {
+  public async findPaginated(
+    pageNo: number,
+    pageSize: number,
+  ): Promise<Paginated<Post, 'posts'>> {
     return await this._postRepository.findPaginated(pageNo, pageSize);
   }
 

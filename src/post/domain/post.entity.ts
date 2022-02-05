@@ -1,8 +1,9 @@
 export default class Post {
   constructor(
+    private _id: number,
     private _title: string,
     private _body: string,
-    private _author: object,
+    private _authorNickname: string,
     private _publishedAt: Date,
   ) {}
 
@@ -14,8 +15,8 @@ export default class Post {
     return this._body;
   }
 
-  public get author(): object {
-    return this._author;
+  public get authorNickname(): string {
+    return this._authorNickname;
   }
 
   public get publishedAt(): Date {
