@@ -1,4 +1,5 @@
-import { createdPostDTO, createPostDTO } from './post.dto';
+import { createdPostDTO, createPostDTO, findPostsByIdsDTO } from './post.dto';
+import Post from './post.entity';
 import { postRepository } from './postRepository.interface';
 
 export class PostService {
@@ -26,8 +27,8 @@ export class PostService {
     };
   }
 
-  findAll() {
-    return `This action returns all post`;
+  public async findByIds(ids: findPostsByIdsDTO): Promise<Post[]> {
+    return await this._postRepository.findByIds(ids);
   }
 
   findOne(id: number) {
