@@ -36,6 +36,10 @@ export class PostService {
     return await this._postRepository.findByIds(ids);
   }
 
+  public async findPaginated(pageNo: number, pageSize: number) {
+    return await this._postRepository.findPaginated(pageNo, pageSize);
+  }
+
   public async update(updatePostDTO: updatePostDTO): Promise<Post> {
     return await this._postRepository.update(updatePostDTO);
   }
