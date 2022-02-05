@@ -21,3 +21,5 @@ export type updatePostDTO = {
   title: Pick<Post, 'title'>;
   body: Pick<Post, 'title'>;
 };
+
+export type removePostDTO = number;

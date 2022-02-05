@@ -36,11 +36,11 @@ export class PostService {
     return await this._postRepository.findByIds(ids);
   }
 
-  public async update(updatePostDTO: updatePostDTO) {
+  public async update(updatePostDTO: updatePostDTO): Promise<Post> {
     return await this._postRepository.update(updatePostDTO);
   }
 
-  public async remove(id: number) {
-    return `This action removes a #${id} post`;
+  public async remove(id: number): Promise<void> {
+    return await this._postRepository.remove(id);
   }
 }
