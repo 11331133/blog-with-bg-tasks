@@ -1,10 +1,10 @@
 import { Paginated } from 'src/utils/paginated.type';
 import { createPostDTO, updatePostDTO } from './post.dto';
 import Post from './post.entity';
-import { postRepository } from './postRepository.interface';
+import { PostRepository } from './postRepository.interface';
 
 export class PostService {
-  constructor(private readonly _postRepository: postRepository) {}
+  constructor(private readonly _postRepository: PostRepository) {}
 
   public async create(
     { title, body, publishedAt = new Date() }: createPostDTO,
