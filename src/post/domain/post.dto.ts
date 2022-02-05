@@ -1,5 +1,3 @@
-import Post from './post.entity';
-
 export type createPostDTO = {
   title: string;
   body: string;
@@ -8,6 +6,6 @@ export type createPostDTO = {
 
 export type updatePostDTO = {
   id: number;
-  title: Pick<Post, 'title'>;
-  body: Pick<Post, 'title'>;
+  title: string;
+  body: string;
 };

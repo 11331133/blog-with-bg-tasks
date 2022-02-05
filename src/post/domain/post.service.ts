@@ -1,10 +1,10 @@
 import { Paginated } from 'src/utils/paginated.type';
 import { createPostDTO, updatePostDTO } from './post.dto';
 import Post from './post.entity';
-import { PostRepository } from './postRepository.interface';
+import { IPostRepository } from './postRepository.interface';
 
 export class PostService {
-  constructor(private readonly _postRepository: PostRepository) {}
+  constructor(private readonly _postRepository: IPostRepository) {}
 
   public async create(
     { title, body, publishedAt = new Date() }: createPostDTO,
@@ -28,7 +28,10 @@ export class PostService {
     pageNo: number,
     pageSize: number,
   ): Promise<Paginated<Post, 'posts'>> {
-    return await this._postRepository.findPaginated(pageNo, pageSize);
+    return await this._postRepository.findPaginated(
+      Math.max(pageNo, 0),
+      Math.max(pageSize, 1),
+    );
   }
 
   public async update(updatePostDTO: updatePostDTO): Promise<Post> {

@@ -1,5 +1,5 @@
 import {
-    AllowNull,
+  AllowNull,
   Column,
   CreatedAt,
   ForeignKey,
@@ -9,7 +9,7 @@ import {
 } from 'sequelize-typescript';
 
 @Table
-export class PostModel extends Model {
+export default class PostModel extends Model {
   @PrimaryKey
   @Column
   id: number;
@@ -25,7 +25,7 @@ export class PostModel extends Model {
   // @ForeignKey()
   @AllowNull(false)
   @Column
-  author: number;
+  authorId: number;
 
   @AllowNull(false)
   @CreatedAt

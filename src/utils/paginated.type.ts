@@ -1,4 +1,4 @@
 export type Paginated<T, K extends string> = {
-  pageSize: number;
-  currentPage: number;
+  totalPages: number;
+  totalEntities: number;
 } & { [k in K]: T[] };
