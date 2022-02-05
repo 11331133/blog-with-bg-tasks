@@ -1,0 +1,24 @@
+type Comment {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateCommentInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateCommentInput {
+  id: Int!
+}
+
+type Query {
+  comment: [Comment]!
+  comment(id: Int!): Comment
+}
+
+type Mutation {
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  removeComment(id: Int!): Comment
+}
