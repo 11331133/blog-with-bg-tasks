@@ -1,7 +1,9 @@
 import {
   AllowNull,
+  AutoIncrement,
   Column,
   CreatedAt,
+  DataType,
   ForeignKey,
   Model,
   PrimaryKey,
@@ -11,6 +13,7 @@ import {
 @Table
 export default class PostModel extends Model {
   @PrimaryKey
+  @AutoIncrement
   @Column
   id: number;
 

@@ -8,7 +8,13 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { PostService } from '../domain/post.service';
-import { createPostGraphQLDTO, paginatedPostsDTO, paginationDTO, postDTO, updatePostGraphQLDTO } from './post.dto';
+import {
+  createPostGraphQLDTO,
+  paginatedPostsDTO,
+  paginationDTO,
+  postDTO,
+  updatePostGraphQLDTO,
+} from './post.dto';
 import { PostGraphQLModel } from './post.graphql-model';
 
 @Resolver(() => PostGraphQLModel)
@@ -43,12 +49,12 @@ export class PostResolver {
     };
   }
 
-  // @Mutation(() => PostGraphQLModel)
-  // async createPost(
-  //   @Args('createPostDTO') createPostDTO: createPostGraphQLDTO,
-  // ): Promise<PostGraphQLModel> {
-  //   return await this.postService.create(createPostDTO, 'author');
-  // }
+  @Mutation(() => PostGraphQLModel)
+  async createPost(
+    @Args('input') createPostDTO: createPostGraphQLDTO,
+  ): Promise<PostGraphQLModel> {
+    return await this.postService.create(createPostDTO, 'author');
+  }
 
   // @Mutation(() => PostGraphQLModel)
   // async updatePost(

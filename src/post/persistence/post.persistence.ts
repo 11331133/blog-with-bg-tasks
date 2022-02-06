@@ -15,9 +15,10 @@ export class PostRepository implements IPostRepository {
     authorNickname: string,
   ): Promise<Post> {
     const post = new this.postModel({
+      authorId: 1,
       title,
       body,
-      publishedAt,
+      publishedAt: 1,
     });
 
     await post.save();

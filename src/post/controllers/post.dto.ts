@@ -2,9 +2,15 @@ import { createPostDTO, updatePostDTO } from '../domain/post.dto';
 import { Field, HideField, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { PostGraphQLModel } from './post.graphql-model';
 
-@ObjectType()
-export class createPostGraphQLDTO extends createPostDTO {
-  @Field(() => Int)
+@InputType()
+export class createPostGraphQLDTO {
+  @Field({ nullable: false })
+  title: string;
+
+  @Field({ nullable: false })
+  body: string;
+
+  @Field(() => Int, { nullable: true })
   createdAt?: number;
 }
 

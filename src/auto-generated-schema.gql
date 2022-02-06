@@ -25,3 +25,13 @@ input paginationDTO {
   page: Int!
   perPage: Int!
 }
+
+type Mutation {
+  createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
+}
+
+input createPostGraphQLDTO {
+  title: String!
+  body: String!
+  createdAt: Int
+}
