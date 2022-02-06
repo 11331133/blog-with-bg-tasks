@@ -27,13 +27,9 @@ export class PostRepository implements IPostRepository {
   }
 
   async update({ id, title, body }: updatePostDTO): Promise<Post> {
-    const post = new this.postModel({ id });
-    if (title) post.title = title;
-    if (body) post.body = body;
+    await this.postModel.update({ title, body }, { where: { id } });
 
-    await post.save();
-
-    return new Post(post.id, title, body, null, post.publishedAt);
+    return new Post(id, title, body, null, null);
   }
 
   async remove(id: number): Promise<void> {

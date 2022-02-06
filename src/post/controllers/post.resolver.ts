@@ -56,12 +56,12 @@ export class PostResolver {
     return await this.postService.create(createPostDTO, 'author');
   }
 
-  // @Mutation(() => PostGraphQLModel)
-  // async updatePost(
-  //   @Args('updatePostDTO') updatePostDTO: updatePostGraphQLDTO,
-  // ): Promise<PostGraphQLModel> {
-  //   return await this.postService.update(updatePostDTO);
-  // }
+  @Mutation(() => PostGraphQLModel)
+  async updatePost(
+    @Args('update') updatePostDTO: updatePostGraphQLDTO,
+  ): Promise<PostGraphQLModel> {
+    return await this.postService.update(updatePostDTO);
+  }
 
   // @Mutation(() => null)
   // async deletePost(

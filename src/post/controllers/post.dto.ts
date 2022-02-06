@@ -53,5 +53,14 @@ export class paginatedPostsDTO {
   isLastPage: boolean;
 }
 
-@ObjectType()
-export class updatePostGraphQLDTO extends updatePostDTO {}
+@InputType()
+export class updatePostGraphQLDTO extends updatePostDTO {
+  @Field(() => Int, { nullable: true })
+  id: number;
+
+  @Field({ nullable: true })
+  title: string;
+
+  @Field({ nullable: true })
+  body: string;
+}
