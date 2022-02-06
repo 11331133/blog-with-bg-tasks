@@ -7,7 +7,7 @@ export class PostService {
   constructor(private readonly _postRepository: IPostRepository) {}
 
   public async create(
-    { title, body, publishedAt = new Date() }: createPostDTO,
+    { title, body, publishedAt = Date.now() }: createPostDTO,
     authorNickname: string,
   ): Promise<Post> {
     return await this._postRepository.create(

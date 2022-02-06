@@ -4,8 +4,12 @@ export default class Post {
     private _title: string,
     private _body: string,
     private _authorNickname: string,
-    private _publishedAt: Date,
+    private _publishedAt: number,
   ) {}
+
+  public get id(): number {
+    return this._id;
+  }
 
   public get title(): string {
     return this._title;
@@ -19,7 +23,7 @@ export default class Post {
     return this._authorNickname;
   }
 
-  public get publishedAt(): Date {
+  public get publishedAt(): number {
     return this._publishedAt;
   }
 }

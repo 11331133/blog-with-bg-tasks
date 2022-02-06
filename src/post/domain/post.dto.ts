@@ -1,10 +1,10 @@
-export type createPostDTO = {
+export abstract class createPostDTO {
   title: string;
   body: string;
-  publishedAt?: Date;
+  publishedAt?: number;
 };
 
-export type updatePostDTO = {
+export abstract class updatePostDTO {
   id: number;
   title: string;
   body: string;
