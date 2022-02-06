@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
 import { AuthModule } from './auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -13,6 +15,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
     UserModule,
     CommentModule,
     AuthModule,
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'src/auto-generated-schema.gql'),
+    }),
     SequelizeModule.forRoot({
       autoLoadModels: true,
       database: 'test',
