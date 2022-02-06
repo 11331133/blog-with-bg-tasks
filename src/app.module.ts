@@ -17,6 +17,7 @@ import { join } from 'path';
     // AuthModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/auto-generated-schema.gql'),
+      sortSchema: true,
     }),
     SequelizeModule.forRoot({
       autoLoadModels: true,

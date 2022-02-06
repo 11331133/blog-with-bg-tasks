@@ -2,27 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
+  deletePost(input: Int!): postDeletedPayload!
+  updatePost(update: updatePostGraphQLDTO!): PostGraphQLModel!
+}
+
 type PostGraphQLModel {
-  id: Int!
-  title: String!
   body: String!
+  id: Int!
   publishedAt: Int!
-}
-
-type paginatedPostsDTO {
-  posts: [PostGraphQLModel!]!
-  totalPages: Int!
-  totalEntities: Int!
-  isLastPage: Boolean!
-}
-
-type postDeletedPayload {
-  response: Boolean!
+  title: String!
 }
 
 type Query {
-  post(id: Int!): PostGraphQLModel
   paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
+  post(id: Int!): PostGraphQLModel
+}
+
+input createPostGraphQLDTO {
+  body: String!
+  createdAt: Int
+  title: String!
+}
+
+type paginatedPostsDTO {
+  isLastPage: Boolean!
+  posts: [PostGraphQLModel!]!
+  totalEntities: Int!
+  totalPages: Int!
 }
 
 input paginationDTO {
@@ -30,20 +38,12 @@ input paginationDTO {
   perPage: Int!
 }
 
-type Mutation {
-  createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
-  updatePost(update: updatePostGraphQLDTO!): PostGraphQLModel!
-  deletePost(input: Int!): postDeletedPayload!
-}
-
-input createPostGraphQLDTO {
-  title: String!
-  body: String!
-  createdAt: Int
+type postDeletedPayload {
+  response: Boolean!
 }
 
 input updatePostGraphQLDTO {
+  body: String
   id: Int
   title: String
-  body: String
 }
