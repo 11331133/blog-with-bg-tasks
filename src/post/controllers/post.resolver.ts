@@ -12,6 +12,7 @@ import {
   createPostGraphQLDTO,
   paginatedPostsDTO,
   paginationDTO,
+  postDeletedPayload,
   postDTO,
   updatePostGraphQLDTO,
 } from './post.dto';
@@ -63,10 +64,14 @@ export class PostResolver {
     return await this.postService.update(updatePostDTO);
   }
 
-  // @Mutation(() => null)
-  // async deletePost(
-  //   @Args('deletePostDTO') deletePostDTO: number,
-  // ): Promise<void> {
-  //   return await this.postService.remove(deletePostDTO);
-  // }
+  @Mutation(() => postDeletedPayload)
+  async deletePost(
+    @Args('input', { type: () => Int }) deletePostDTO: number,
+  ): Promise<postDeletedPayload> {
+    await this.postService.remove(deletePostDTO);
+
+    return {
+      response: true,
+    };
+  }
 }

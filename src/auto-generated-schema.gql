@@ -16,6 +16,10 @@ type paginatedPostsDTO {
   isLastPage: Boolean!
 }
 
+type postDeletedPayload {
+  response: Boolean!
+}
+
 type Query {
   post(id: Int!): PostGraphQLModel
   paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
@@ -29,6 +33,7 @@ input paginationDTO {
 type Mutation {
   createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
   updatePost(update: updatePostGraphQLDTO!): PostGraphQLModel!
+  deletePost(input: Int!): postDeletedPayload!
 }
 
 input createPostGraphQLDTO {

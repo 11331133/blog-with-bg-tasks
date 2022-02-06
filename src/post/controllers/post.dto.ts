@@ -64,3 +64,9 @@ export class updatePostGraphQLDTO extends updatePostDTO {
   @Field({ nullable: true })
   body: string;
 }
+
+@ObjectType()
+export class postDeletedPayload {
+  @Field()
+  response: boolean;
+}
