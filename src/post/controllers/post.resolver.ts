@@ -7,9 +7,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { createPostDTO, updatePostDTO } from '../domain/post.dto';
 import { PostService } from '../domain/post.service';
-import { paginatedPostsDTO, paginationDTO, postDTO } from './post.dto';
+import { createPostGraphQLDTO, paginatedPostsDTO, paginationDTO, postDTO, updatePostGraphQLDTO } from './post.dto';
 import { PostGraphQLModel } from './post.graphql-model';
 
 @Resolver(() => PostGraphQLModel)
@@ -29,39 +28,39 @@ export class PostResolver {
     return (await this.postService.findByIds([id])).shift();
   }
 
-  @Query(() => Object)
-  async getPaginatedPosts(
-    @Args('paginationInfo') { page, perPage }: paginationDTO,
-  ): Promise<paginatedPostsDTO> {
-    const { posts, totalPages, totalEntities } =
-      await this.postService.findPaginated(page, perPage);
+  // @Query(() => Object)
+  // async getPaginatedPosts(
+  //   @Args('paginationInfo') { page, perPage }: paginationDTO,
+  // ): Promise<paginatedPostsDTO> {
+  //   const { posts, totalPages, totalEntities } =
+  //     await this.postService.findPaginated(page, perPage);
 
-    return {
-      posts,
-      totalPages,
-      totalEntities,
-      isLastPage: page === totalPages,
-    };
-  }
+  //   return {
+  //     posts,
+  //     totalPages,
+  //     totalEntities,
+  //     isLastPage: page === totalPages,
+  //   };
+  // }
 
-  @Mutation(() => PostGraphQLModel)
-  async createPost(
-    @Args('createPostDTO') createPostDTO: createPostDTO,
-  ): Promise<PostGraphQLModel> {
-    return await this.postService.create(createPostDTO, 'author');
-  }
+  // @Mutation(() => PostGraphQLModel)
+  // async createPost(
+  //   @Args('createPostDTO') createPostDTO: createPostGraphQLDTO,
+  // ): Promise<PostGraphQLModel> {
+  //   return await this.postService.create(createPostDTO, 'author');
+  // }
 
-  @Mutation(() => PostGraphQLModel)
-  async updatePost(
-    @Args('updatePostDTO') updatePostDTO: updatePostDTO,
-  ): Promise<PostGraphQLModel> {
-    return await this.postService.update(updatePostDTO);
-  }
+  // @Mutation(() => PostGraphQLModel)
+  // async updatePost(
+  //   @Args('updatePostDTO') updatePostDTO: updatePostGraphQLDTO,
+  // ): Promise<PostGraphQLModel> {
+  //   return await this.postService.update(updatePostDTO);
+  // }
 
-  @Mutation(() => null)
-  async deletePost(
-    @Args('deletePostDTO') deletePostDTO: number,
-  ): Promise<void> {
-    return await this.postService.remove(deletePostDTO);
-  }
+  // @Mutation(() => null)
+  // async deletePost(
+  //   @Args('deletePostDTO') deletePostDTO: number,
+  // ): Promise<void> {
+  //   return await this.postService.remove(deletePostDTO);
+  // }
 }

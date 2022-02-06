@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PostModule } from './post/post.module';
+import { PostModule } from './post/controllers/post.module';
 import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
 import { AuthModule } from './auth/auth.module';
@@ -12,9 +12,9 @@ import { join } from 'path';
 @Module({
   imports: [
     PostModule,
-    UserModule,
-    CommentModule,
-    AuthModule,
+    // UserModule,
+    // CommentModule,
+    // AuthModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/auto-generated-schema.gql'),
     }),
@@ -22,7 +22,7 @@ import { join } from 'path';
       autoLoadModels: true,
       database: 'blog-with-bg-tasks',
       dialect: 'postgres',
-      host: 'localhost',
+      host: 'db',
       models: [],
       password: 'root',
       port: 5432,

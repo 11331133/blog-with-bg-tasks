@@ -5,6 +5,7 @@ import {PostRepository} from './post.persistence';
 
 @Module({
   imports: [SequelizeModule.forFeature([PostModel])],
-  providers: [PostRepository]
+  providers: [PostRepository],
+  exports: [PostRepository]
 })
 export class PostPersistence {}

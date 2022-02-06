@@ -4,7 +4,9 @@ import { createPostDTO, updatePostDTO } from '../domain/post.dto';
 import { IPostRepository } from '../domain/postRepository.interface';
 import PostModel from './post.model';
 import Post from '../domain/post.entity';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PostRepository implements IPostRepository {
   constructor(@InjectModel(PostModel) private postModel: typeof PostModel) {}
 
@@ -44,9 +46,7 @@ export class PostRepository implements IPostRepository {
   async findByIds(ids: number[]): Promise<Post[]> {
     const postModels = await this.postModel.findAll({
       where: {
-        id: {
-          in: ids,
-        },
+        id: ids,
       },
     });
 
