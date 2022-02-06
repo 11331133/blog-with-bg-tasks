@@ -30,5 +30,5 @@ export default class PostModel extends Model {
   @AllowNull(false)
   @CreatedAt
   @Column
-  publishedAt: Date;
+  publishedAt: number;
 }

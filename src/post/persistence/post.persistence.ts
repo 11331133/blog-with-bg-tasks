@@ -9,7 +9,7 @@ export class PostRepository implements IPostRepository {
   constructor(@InjectModel(PostModel) private postModel: typeof PostModel) {}
 
   async create(
-    { title, body, publishedAt = new Date() }: createPostDTO,
+    { title, body, publishedAt = Date.now() }: createPostDTO,
     authorNickname: string,
   ): Promise<Post> {
     const post = new this.postModel({
