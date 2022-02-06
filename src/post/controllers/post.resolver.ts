@@ -45,11 +45,23 @@ export class PostResolver {
   }
 
   @Mutation(() => PostGraphQLModel)
-  async createPost(@Args('createPostDTO') createPostDTO: createPostDTO) {}
+  async createPost(
+    @Args('createPostDTO') createPostDTO: createPostDTO,
+  ): Promise<PostGraphQLModel> {
+    return await this.postService.create(createPostDTO, 'author');
+  }
 
   @Mutation(() => PostGraphQLModel)
-  async updatePost(@Args('updatePostDTO') updatePostDTO: updatePostDTO) {}
+  async updatePost(
+    @Args('updatePostDTO') updatePostDTO: updatePostDTO,
+  ): Promise<PostGraphQLModel> {
+    return await this.postService.update(updatePostDTO);
+  }
 
-  @Mutation(() => {})
-  async deletePost(@Args('deletePostDTO') deletePostDTO: deletePostDTO) {}
+  @Mutation(() => null)
+  async deletePost(
+    @Args('deletePostDTO') deletePostDTO: number,
+  ): Promise<void> {
+    return await this.postService.remove(deletePostDTO);
+  }
 }
