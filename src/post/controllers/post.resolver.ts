@@ -21,7 +21,7 @@ export class PostResolver {
   // @ResolveField(() => [Comment])
   // async comments(@Parent() post: Post) {}
 
-  @Query(() => PostGraphQLModel, { name: 'post' })
+  @Query(() => PostGraphQLModel, { name: 'post', nullable: true })
   async getPost(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<PostGraphQLModel> {
