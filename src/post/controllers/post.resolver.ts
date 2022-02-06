@@ -28,20 +28,20 @@ export class PostResolver {
     return (await this.postService.findByIds([id])).shift();
   }
 
-  // @Query(() => Object)
-  // async getPaginatedPosts(
-  //   @Args('paginationInfo') { page, perPage }: paginationDTO,
-  // ): Promise<paginatedPostsDTO> {
-  //   const { posts, totalPages, totalEntities } =
-  //     await this.postService.findPaginated(page, perPage);
+  @Query(() => paginatedPostsDTO, { name: 'paginatedPosts' })
+  async getPaginatedPosts(
+    @Args('input') { page, perPage }: paginationDTO,
+  ): Promise<paginatedPostsDTO> {
+    const { posts, totalPages, totalEntities } =
+      await this.postService.findPaginated(page, perPage);
 
-  //   return {
-  //     posts,
-  //     totalPages,
-  //     totalEntities,
-  //     isLastPage: page === totalPages,
-  //   };
-  // }
+    return {
+      posts,
+      totalPages,
+      totalEntities,
+      isLastPage: page >= totalPages,
+    };
+  }
 
   // @Mutation(() => PostGraphQLModel)
   // async createPost(

@@ -62,7 +62,7 @@ export class PostRepository implements IPostRepository {
   ): Promise<Paginated<Post, 'posts'>> {
     const { count: totalEntities, rows: postModels } =
       await this.postModel.findAndCountAll({
-        order: ['publishedAt', 'desc'],
+        order: ['publishedAt'],
         limit: pageSize,
         offset: (pageNo - 1) * pageSize,
       });

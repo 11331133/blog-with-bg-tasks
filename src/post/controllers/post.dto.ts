@@ -1,5 +1,5 @@
 import { createPostDTO, updatePostDTO } from '../domain/post.dto';
-import { Field, HideField, Int, ObjectType } from '@nestjs/graphql';
+import { Field, HideField, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { PostGraphQLModel } from './post.graphql-model';
 
 @ObjectType()
@@ -23,7 +23,7 @@ export class postDTO {
   authorNickname: string;
 }
 
-@ObjectType()
+@InputType()
 export class paginationDTO {
   @Field(() => Int)
   page: number;
@@ -34,9 +34,16 @@ export class paginationDTO {
 
 @ObjectType()
 export class paginatedPostsDTO {
+  @Field(() => [PostGraphQLModel])
   posts: PostGraphQLModel[];
+
+  @Field(() => Int)
   totalPages: number;
+
+  @Field(() => Int)
   totalEntities: number;
+
+  @Field()
   isLastPage: boolean;
 }
 

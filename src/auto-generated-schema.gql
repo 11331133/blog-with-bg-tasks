@@ -9,6 +9,19 @@ type PostGraphQLModel {
   publishedAt: Int!
 }
 
+type paginatedPostsDTO {
+  posts: [PostGraphQLModel!]!
+  totalPages: Int!
+  totalEntities: Int!
+  isLastPage: Boolean!
+}
+
 type Query {
-  post(id: Int!): PostGraphQLModel!
+  post(id: Int!): PostGraphQLModel
+  paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
+}
+
+input paginationDTO {
+  page: Int!
+  perPage: Int!
 }
