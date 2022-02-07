@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostModule } from './post/controllers/post.module';
 import { UserModule } from './user/user.module';
-import { CommentModule } from './comment/comment.module';
+import { CommentModule } from './comment/controllers/comment.module';
 import { AuthModule } from './auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -13,7 +13,7 @@ import { join } from 'path';
   imports: [
     PostModule,
     // UserModule,
-    // CommentModule,
+    CommentModule,
     // AuthModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/auto-generated-schema.gql'),

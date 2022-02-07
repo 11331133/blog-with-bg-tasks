@@ -6,9 +6,6 @@ export class CommentGraphQLModel {
   id: number;
 
   @Field({ nullable: false })
-  title: string;
-
-  @Field({ nullable: false })
   body: string;
 
   // @Field(type => Author)

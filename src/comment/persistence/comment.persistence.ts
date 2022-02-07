@@ -24,8 +24,8 @@ export class CommentRepository implements ICommentRepository {
     return new Comment({id: comment.id, body, publishedAt});
   }
 
-  async update({ id, title, body }: updateCommentDTO): Promise<Comment> {
-    await this.commentModel.update({ title, body }, { where: { id } });
+  async update({ id, body }: updateCommentDTO): Promise<Comment> {
+    await this.commentModel.update({ body }, { where: { id } });
 
     return new Comment({id, body, publishedAt: null});
   }

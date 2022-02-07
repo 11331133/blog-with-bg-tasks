@@ -1,9 +1,9 @@
 import { createCommentDTO, updateCommentDTO } from './comment.dto';
 import Comment from './comment.entity';
-import { CommentRepository } from './commentRepository.interface';
+import { ICommentRepository } from './commentRepository.interface';
 
 export class CommentService {
-  constructor(private readonly _commentRepository: CommentRepository) {}
+  constructor(private readonly _commentRepository: ICommentRepository) {}
 
   public async create(
     { body, publishedAt = Date.now() }: createCommentDTO,

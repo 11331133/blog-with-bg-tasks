@@ -2,9 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CommentGraphQLModel {
+  body: String!
+  id: Int!
+  publishedAt: Int!
+}
+
 type Mutation {
+  createComment(input: createCommentGraphQLDTO!): CommentGraphQLModel!
   createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
+  deleteComment(input: Int!): commentDeletedPayload!
   deletePost(input: Int!): postDeletedPayload!
+  updateComment(update: updateCommentGraphQLDTO!): CommentGraphQLModel!
   updatePost(update: updatePostGraphQLDTO!): PostGraphQLModel!
 }
 
@@ -16,8 +25,19 @@ type PostGraphQLModel {
 }
 
 type Query {
+  comment(id: Int!): CommentGraphQLModel
   paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
   post(id: Int!): PostGraphQLModel
+}
+
+type commentDeletedPayload {
+  response: Boolean!
+}
+
+input createCommentGraphQLDTO {
+  body: String!
+  createdAt: Int
+  title: String!
 }
 
 input createPostGraphQLDTO {
@@ -40,6 +60,11 @@ input paginationDTO {
 
 type postDeletedPayload {
   response: Boolean!
+}
+
+input updateCommentGraphQLDTO {
+  body: String
+  id: Int
 }
 
 input updatePostGraphQLDTO {
