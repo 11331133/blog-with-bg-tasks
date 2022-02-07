@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostModule } from './post/controllers/post.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from './user/controllers/user.module';
 import { CommentModule } from './comment/controllers/comment.module';
 import { AuthModule } from './auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -12,7 +12,7 @@ import { join } from 'path';
 @Module({
   imports: [
     PostModule,
-    // UserModule,
+    UserModule,
     CommentModule,
     // AuthModule,
     GraphQLModule.forRoot({

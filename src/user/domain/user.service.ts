@@ -8,12 +8,12 @@ export class UserService {
   public async create({
     nickname,
     email,
-    passwordHash: password,
+    password,
   }: createUserDTO): Promise<User> {
     return await this._userRepository.create({
       nickname,
       email,
-      hashcode: password,
+      passwordHash: 'hashed ' + password,
     });
   }
 

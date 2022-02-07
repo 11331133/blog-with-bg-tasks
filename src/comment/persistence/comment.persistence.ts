@@ -7,7 +7,9 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CommentRepository implements ICommentRepository {
-  constructor(@InjectModel(CommentModel) private commentModel: typeof CommentModel) {}
+  constructor(
+    @InjectModel(CommentModel) private commentModel: typeof CommentModel,
+  ) {}
 
   async create(
     { body, publishedAt = Date.now() }: createCommentDTO,
@@ -21,13 +23,13 @@ export class CommentRepository implements ICommentRepository {
 
     await comment.save();
 
-    return new Comment({id: comment.id, body, publishedAt});
+    return new Comment({ id: comment.id, body, publishedAt });
   }
 
   async update({ id, body }: updateCommentDTO): Promise<Comment> {
     await this.commentModel.update({ body }, { where: { id } });
 
-    return new Comment({id, body, publishedAt: null});
+    return new Comment({ id, body, publishedAt: null });
   }
 
   async remove(id: number): Promise<void> {
@@ -47,7 +49,11 @@ export class CommentRepository implements ICommentRepository {
 
     return commentModels.map(
       (model) =>
-        new Comment({id: model.id, body: model.body,  publishedAt: model.publishedAt}),
+        new Comment({
+          id: model.id,
+          body: model.body,
+          publishedAt: model.publishedAt,
+        }),
     );
   }
 }

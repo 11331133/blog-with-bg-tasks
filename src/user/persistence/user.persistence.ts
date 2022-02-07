@@ -13,7 +13,11 @@ export class UserRepository implements IUserRepository {
     nickname,
     email,
     passwordHash,
-  }: createUserDTO): Promise<User> {
+  }: {
+    nickname: string;
+    email: string;
+    passwordHash: string;
+  }): Promise<User> {
     const user = new this.userModel({
       nickname,
       email,
