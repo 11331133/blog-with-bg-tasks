@@ -22,8 +22,8 @@ export class CommentService {
     return await this._commentRepository.findByIds(ids);
   }
 
-  public async update(updatePostDTO: updateCommentDTO): Promise<Comment> {
-    return await this._commentRepository.update(updatePostDTO);
+  public async update(updateCommentDTO: updateCommentDTO): Promise<Comment> {
+    return await this._commentRepository.update(updateCommentDTO);
   }
 
   public async remove(id: number): Promise<void> {
