@@ -45,4 +45,23 @@ export class UserRepository implements IUserRepository {
         }),
     );
   }
+
+  async findByUsername(
+    username: string,
+  ): Promise<{ user: User; hashcode: string } | null> {
+    const userModel = await this.userModel.findOne({
+      where: { nickname: username },
+    });
+
+    return userModel
+      ? {
+          user: new User({
+            id: userModel.id,
+            nickname: userModel.nickname,
+            email: userModel.nickname,
+          }),
+          hashcode: userModel.passwordHash,
+        }
+      : null;
+  }
 }

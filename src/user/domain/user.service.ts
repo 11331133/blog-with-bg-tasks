@@ -20,4 +20,10 @@ export class UserService {
   public async findByIds(ids: number[]): Promise<User[]> {
     return await this._userRepository.findByIds(ids);
   }
+
+  public async findByUsername(
+    username: string,
+  ): Promise<{ user: User; hashcode: string } | null> {
+    return await this._userRepository.findByUsername(username);
+  }
 }
