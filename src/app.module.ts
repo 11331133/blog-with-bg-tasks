@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -29,6 +30,9 @@ import { join } from 'path';
       port: 5432,
       synchronize: true,
       username: 'root',
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
   ],
   controllers: [AppController],
