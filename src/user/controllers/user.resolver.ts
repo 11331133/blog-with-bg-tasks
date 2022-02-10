@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { Public } from 'src/auth/auth.decorators';
 import { UserService } from '../domain/user.service';
 import { createUserGraphQLDTO } from './user.dto';
 import { UserGraphQLModel } from './user.graphql-model';
@@ -22,6 +23,7 @@ export class UserResolver {
     return (await this.userService.findByIds([id])).shift();
   }
 
+  @Public()
   @Mutation(() => UserGraphQLModel)
   async createUser(
     @Args('input') createUserDTO: createUserGraphQLDTO,
