@@ -8,10 +8,15 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { ConfigService } from '@nestjs/config';
+import { UserService } from 'src/user/domain/user.service';
+import { IUserRepository } from 'src/user/domain/userRepository.interface';
+import { UserRepository } from 'src/user/persistence/user.persistence';
+import { UserPersistence } from 'src/user/persistence/userPersistence.module';
 
 @Module({
   imports: [
     UserModule,
+    UserPersistence,
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -28,6 +33,12 @@ import { ConfigService } from '@nestjs/config';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: UserService,
+      useFactory: (userRepository: IUserRepository) =>
+        new UserService(userRepository),
+      inject: [UserRepository],
     },
   ],
 })
