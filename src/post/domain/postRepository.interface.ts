@@ -1,14 +1,14 @@
 import { Paginated } from 'src/utils/paginated.type';
 import { createPostDTO, updatePostDTO } from './post.dto';
-import Post from './post.entity';
+import PostEntity from './post.entity';
 
 export interface IPostRepository {
-  create(dto: createPostDTO, authorNickname: string): Promise<Post>;
-  update(dto: updatePostDTO): Promise<Post>;
+  create(dto: createPostDTO, authorNickname: string): Promise<PostEntity>;
+  update(dto: updatePostDTO): Promise<PostEntity>;
   remove(id: number): Promise<void>;
-  findByIds(ids: number[]): Promise<Post[]>;
+  findByIds(ids: number[]): Promise<PostEntity[]>;
   findPaginated(
     pageNo: number,
     pageSize: number,
-  ): Promise<Paginated<Post, 'posts'>>;
+  ): Promise<Paginated<PostEntity, 'posts'>>;
 }

@@ -3,7 +3,7 @@ import { Paginated } from 'src/utils/paginated.type';
 import { createPostDTO, updatePostDTO } from '../domain/post.dto';
 import { IPostRepository } from '../domain/postRepository.interface';
 import PostModel from './post.model';
-import Post from '../domain/post.entity';
+import PostEntity from '../domain/post.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class PostRepository implements IPostRepository {
   async create(
     { title, body, publishedAt = Date.now() }: createPostDTO,
     authorNickname: string,
-  ): Promise<Post> {
+  ): Promise<PostEntity> {
     const post = new this.postModel({
       authorId: 1,
       title,
@@ -23,13 +23,13 @@ export class PostRepository implements IPostRepository {
 
     await post.save();
 
-    return new Post(post.id, title, body, authorNickname, publishedAt);
+    return new PostEntity(post.id, title, body, authorNickname, publishedAt);
   }
 
-  async update({ id, title, body }: updatePostDTO): Promise<Post> {
+  async update({ id, title, body }: updatePostDTO): Promise<PostEntity> {
     await this.postModel.update({ title, body }, { where: { id } });
 
-    return new Post(id, title, body, null, null);
+    return new PostEntity(id, title, body, null, null);
   }
 
   async remove(id: number): Promise<void> {
@@ -40,7 +40,7 @@ export class PostRepository implements IPostRepository {
     });
   }
 
-  async findByIds(ids: number[]): Promise<Post[]> {
+  async findByIds(ids: number[]): Promise<PostEntity[]> {
     const postModels = await this.postModel.findAll({
       where: {
         id: ids,
@@ -49,14 +49,14 @@ export class PostRepository implements IPostRepository {
 
     return postModels.map(
       (model) =>
-        new Post(model.id, model.title, model.body, null, model.publishedAt),
+        new PostEntity(model.id, model.title, model.body, null, model.publishedAt),
     );
   }
 
   async findPaginated(
     pageNo: number,
     pageSize: number,
-  ): Promise<Paginated<Post, 'posts'>> {
+  ): Promise<Paginated<PostEntity, 'posts'>> {
     const { count: totalEntities, rows: postModels } =
       await this.postModel.findAndCountAll({
         order: ['publishedAt'],
@@ -69,7 +69,7 @@ export class PostRepository implements IPostRepository {
       totalEntities,
       posts: postModels.map(
         (model) =>
-          new Post(model.id, model.title, model.body, null, model.publishedAt),
+          new PostEntity(model.id, model.title, model.body, null, model.publishedAt),
       ),
     };
   }
