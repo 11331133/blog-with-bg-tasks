@@ -1,5 +1,5 @@
 import { createCommentDTO, updateCommentDTO } from './comment.dto';
-import Comment from './comment.entity';
+import CommentEntity from './comment.entity';
 import { ICommentRepository } from './commentRepository.interface';
 
 export class CommentService {
@@ -8,7 +8,7 @@ export class CommentService {
   public async create(
     { body, publishedAt = Date.now() }: createCommentDTO,
     authorNickname: string,
-  ): Promise<Comment> {
+  ): Promise<CommentEntity> {
     return await this._commentRepository.create(
       {
         body,
@@ -18,11 +18,11 @@ export class CommentService {
     );
   }
 
-  public async findByIds(ids: number[]): Promise<Comment[]> {
+  public async findByIds(ids: number[]): Promise<CommentEntity[]> {
     return await this._commentRepository.findByIds(ids);
   }
 
-  public async update(updateCommentDTO: updateCommentDTO): Promise<Comment> {
+  public async update(updateCommentDTO: updateCommentDTO): Promise<CommentEntity> {
     return await this._commentRepository.update(updateCommentDTO);
   }
 

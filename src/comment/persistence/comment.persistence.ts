@@ -2,7 +2,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { createCommentDTO, updateCommentDTO } from '../domain/comment.dto';
 import { ICommentRepository } from '../domain/commentRepository.interface';
 import CommentModel from './comment.model';
-import Comment from '../domain/comment.entity';
+import CommentEntity from '../domain/comment.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class CommentRepository implements ICommentRepository {
   async create(
     { body, publishedAt = Date.now() }: createCommentDTO,
     authorNickname: string,
-  ): Promise<Comment> {
+  ): Promise<CommentEntity> {
     const comment = new this.commentModel({
       authorId: 1,
       body,
@@ -23,13 +23,13 @@ export class CommentRepository implements ICommentRepository {
 
     await comment.save();
 
-    return new Comment({ id: comment.id, body, publishedAt });
+    return new CommentEntity({ id: comment.id, body, publishedAt });
   }
 
-  async update({ id, body }: updateCommentDTO): Promise<Comment> {
+  async update({ id, body }: updateCommentDTO): Promise<CommentEntity> {
     await this.commentModel.update({ body }, { where: { id } });
 
-    return new Comment({ id, body, publishedAt: null });
+    return new CommentEntity({ id, body, publishedAt: null });
   }
 
   async remove(id: number): Promise<void> {
@@ -40,7 +40,7 @@ export class CommentRepository implements ICommentRepository {
     });
   }
 
-  async findByIds(ids: number[]): Promise<Comment[]> {
+  async findByIds(ids: number[]): Promise<CommentEntity[]> {
     const commentModels = await this.commentModel.findAll({
       where: {
         id: ids,
@@ -49,7 +49,7 @@ export class CommentRepository implements ICommentRepository {
 
     return commentModels.map(
       (model) =>
-        new Comment({
+        new CommentEntity({
           id: model.id,
           body: model.body,
           publishedAt: model.publishedAt,

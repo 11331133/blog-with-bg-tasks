@@ -1,4 +1,4 @@
-export default class Comment {
+export default class CommentEntity {
   private readonly _id: number;
   private readonly _body: string;
   private readonly _publishedAt: number;

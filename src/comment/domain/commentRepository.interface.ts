@@ -1,9 +1,9 @@
 import { createCommentDTO, updateCommentDTO } from './comment.dto';
-import Comment from './comment.entity';
+import CommentEntity from './comment.entity';
 
 export interface ICommentRepository {
-  create(dto: createCommentDTO, authorNickname: string): Promise<Comment>;
-  update(dto: updateCommentDTO): Promise<Comment>;
+  create(dto: createCommentDTO, authorNickname: string): Promise<CommentEntity>;
+  update(dto: updateCommentDTO): Promise<CommentEntity>;
   remove(id: number): Promise<void>;
-  findByIds(ids: number[]): Promise<Comment[]>;
+  findByIds(ids: number[]): Promise<CommentEntity[]>;
 }
