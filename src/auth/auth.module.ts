@@ -12,6 +12,7 @@ import { UserService } from 'src/user/domain/user.service';
 import { IUserRepository } from 'src/user/domain/userRepository.interface';
 import { UserRepository } from 'src/user/persistence/user.persistence';
 import { UserPersistence } from 'src/user/persistence/userPersistence.module';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserPersistence } from 'src/user/persistence/userPersistence.module';
   ],
   providers: [
     AuthService,
+    AuthResolver,
     LocalStrategy,
     JwtStrategy,
     {

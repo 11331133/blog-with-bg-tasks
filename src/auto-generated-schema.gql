@@ -8,12 +8,23 @@ type CommentGraphQLModel {
   publishedAt: Int!
 }
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginPayload {
+  accessToken: String!
+  refreshToken: String!
+}
+
 type Mutation {
   createComment(input: createCommentGraphQLDTO!): CommentGraphQLModel!
   createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
   createUser(input: createUserGraphQLDTO!): UserGraphQLModel!
   deleteComment(input: Int!): commentDeletedPayload!
   deletePost(input: Int!): postDeletedPayload!
+  login(input: LoginInput!): LoginPayload!
   updateComment(update: updateCommentGraphQLDTO!): CommentGraphQLModel!
   updatePost(update: updatePostGraphQLDTO!): PostGraphQLModel!
 }
