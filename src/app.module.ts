@@ -14,7 +14,7 @@ import { join } from 'path';
     PostModule,
     UserModule,
     CommentModule,
-    // AuthModule,
+    AuthModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/auto-generated-schema.gql'),
       sortSchema: true,
