@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { PostModule } from './post/controllers/post.module';
 import { UserModule } from './user/controllers/user.module';
 import { CommentModule } from './comment/controllers/comment.module';
@@ -39,7 +37,5 @@ import { Dialect } from 'sequelize/dist';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
