@@ -1,4 +1,4 @@
-export default class User {
+export default class UserEntity {
   private readonly _id: number;
   private readonly _nickname: string;
   private readonly _email: string;

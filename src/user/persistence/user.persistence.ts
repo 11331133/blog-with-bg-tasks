@@ -2,7 +2,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { createUserDTO } from '../domain/user.dto';
 import { IUserRepository } from '../domain/userRepository.interface';
 import UserModel from './user.model';
-import User from '../domain/user.entity';
+import UserEntity from '../domain/user.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class UserRepository implements IUserRepository {
     nickname: string;
     email: string;
     passwordHash: string;
-  }): Promise<User> {
+  }): Promise<UserEntity> {
     const user = new this.userModel({
       nickname,
       email,
@@ -26,10 +26,10 @@ export class UserRepository implements IUserRepository {
 
     await user.save();
 
-    return new User({ id: user.id, nickname, email });
+    return new UserEntity({ id: user.id, nickname, email });
   }
 
-  async findByIds(ids: number[]): Promise<User[]> {
+  async findByIds(ids: number[]): Promise<UserEntity[]> {
     const userModels = await this.userModel.findAll({
       where: {
         id: ids,
@@ -38,7 +38,7 @@ export class UserRepository implements IUserRepository {
 
     return userModels.map(
       (model) =>
-        new User({
+        new UserEntity({
           id: model.id,
           nickname: model.nickname,
           email: model.email,
@@ -48,14 +48,14 @@ export class UserRepository implements IUserRepository {
 
   async findByUsername(
     username: string,
-  ): Promise<{ user: User; hashcode: string } | null> {
+  ): Promise<{ user: UserEntity; hashcode: string } | null> {
     const userModel = await this.userModel.findOne({
       where: { nickname: username },
     });
 
     return userModel
       ? {
-          user: new User({
+          user: new UserEntity({
             id: userModel.id,
             nickname: userModel.nickname,
             email: userModel.nickname,

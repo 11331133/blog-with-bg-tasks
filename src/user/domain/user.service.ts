@@ -1,5 +1,5 @@
 import { createUserDTO } from './user.dto';
-import User from './user.entity';
+import UserEntity from './user.entity';
 import { IUserRepository } from './userRepository.interface';
 
 export class UserService {
@@ -9,7 +9,7 @@ export class UserService {
     nickname,
     email,
     password,
-  }: createUserDTO): Promise<User> {
+  }: createUserDTO): Promise<UserEntity> {
     return await this._userRepository.create({
       nickname,
       email,
@@ -17,13 +17,13 @@ export class UserService {
     });
   }
 
-  public async findByIds(ids: number[]): Promise<User[]> {
+  public async findByIds(ids: number[]): Promise<UserEntity[]> {
     return await this._userRepository.findByIds(ids);
   }
 
   public async findByUsername(
     username: string,
-  ): Promise<{ user: User; hashcode: string } | null> {
+  ): Promise<{ user: UserEntity; hashcode: string } | null> {
     return await this._userRepository.findByUsername(username);
   }
 }
