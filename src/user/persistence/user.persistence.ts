@@ -46,11 +46,11 @@ export class UserRepository implements IUserRepository {
     );
   }
 
-  async findByUsername(
-    username: string,
+  async findByEmail(
+    email: string,
   ): Promise<{ user: UserEntity; hashcode: string } | null> {
     const userModel = await this.userModel.findOne({
-      where: { nickname: username },
+      where: { email },
     });
 
     return userModel
@@ -58,7 +58,7 @@ export class UserRepository implements IUserRepository {
           user: new UserEntity({
             id: userModel.id,
             nickname: userModel.nickname,
-            email: userModel.nickname,
+            email: userModel.email,
           }),
           hashcode: userModel.passwordHash,
         }

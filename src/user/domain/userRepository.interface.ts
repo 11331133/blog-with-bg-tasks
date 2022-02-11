@@ -8,7 +8,7 @@ export interface IUserRepository {
     passwordHash: string;
   }): Promise<UserEntity>;
   findByIds(ids: number[]): Promise<UserEntity[]>;
-  findByUsername(
-    username: string,
+  findByEmail(
+    email: string,
   ): Promise<{ user: UserEntity; hashcode: string } | null>;
 }

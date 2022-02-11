@@ -6,7 +6,6 @@ import { UserModule } from 'src/user/controllers/user.module';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { LocalStrategy } from './strategies/local.strategy';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from 'src/user/domain/user.service';
 import { IUserRepository } from 'src/user/domain/userRepository.interface';
@@ -30,7 +29,6 @@ import { AuthResolver } from './auth.resolver';
   providers: [
     AuthService,
     AuthResolver,
-    LocalStrategy,
     JwtStrategy,
     {
       provide: APP_GUARD,

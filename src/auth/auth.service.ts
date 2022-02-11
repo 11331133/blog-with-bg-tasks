@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
-import UserEntity from 'src/user/domain/user.entity';
+import { GraphQLError } from 'graphql';
 import { UserService } from 'src/user/domain/user.service';
 
 @Injectable()
@@ -11,15 +11,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<UserEntity> {
-    const { user, hashcode } = await this.usersService.findByUsername(username);
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    const { user, hashcode } = await this.usersService.findByEmail(email);
 
     const credentialsAreCorrect = await bcrypt.compare(hashcode, password);
-    return credentialsAreCorrect ? user : null;
-  }
+    if (!credentialsAreCorrect)
+      throw new GraphQLError('User credentials are incorrect');
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
+    const payload = { username: user.nickname, sub: user.id };
 
     return {
       accessToken: this.jwtService.sign(payload),

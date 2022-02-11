@@ -21,9 +21,9 @@ export class UserService {
     return await this._userRepository.findByIds(ids);
   }
 
-  public async findByUsername(
-    username: string,
+  public async findByEmail(
+    email: string,
   ): Promise<{ user: UserEntity; hashcode: string } | null> {
-    return await this._userRepository.findByUsername(username);
+    return await this._userRepository.findByEmail(email);
   }
 }
