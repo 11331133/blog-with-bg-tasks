@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 import { UserService } from 'src/user/domain/user.service';
 
@@ -17,15 +17,15 @@ export class AuthService {
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const { user, hashcode } = await this.usersService.findByEmail(email);
 
-    const credentialsAreCorrect = await bcrypt.compare(hashcode, password);
+    const credentialsAreCorrect = await bcrypt.compare(password, hashcode);
     if (!credentialsAreCorrect)
       throw new GraphQLError('User credentials are incorrect');
 
     const payload = { username: user.nickname, sub: user.id };
 
     return {
-      accessToken: this.jwtService.sign(payload),
-      refreshToken: this.jwtService.sign(payload),
+      accessToken: await this.jwtService.signAsync(payload),
+      refreshToken: await this.jwtService.signAsync(payload),
     };
   }
 }
