@@ -1,15 +1,7 @@
-import {
-  Args,
-  Int,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Public } from 'src/auth/auth.decorators';
 import { UserService } from '../domain/user.service';
-import { createUserGraphQLDTO } from './user.dto';
+import { createUserInput } from './user.dto';
 import { UserGraphQLModel } from './user.graphql-model';
 
 @Resolver(() => UserGraphQLModel)
@@ -26,8 +18,8 @@ export class UserResolver {
   @Public()
   @Mutation(() => UserGraphQLModel)
   async createUser(
-    @Args('input') createUserDTO: createUserGraphQLDTO,
+    @Args('input') createUserInput: createUserInput,
   ): Promise<UserGraphQLModel> {
-    return await this.userService.create(createUserDTO);
+    return await this.userService.create(createUserInput);
   }
 }

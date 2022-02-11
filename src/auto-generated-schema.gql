@@ -21,7 +21,7 @@ type LoginPayload {
 type Mutation {
   createComment(input: createCommentGraphQLDTO!): CommentGraphQLModel!
   createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
-  createUser(input: createUserGraphQLDTO!): UserGraphQLModel!
+  createUser(input: createUserInput!): UserGraphQLModel!
   deleteComment(input: Int!): commentDeletedPayload!
   deletePost(input: Int!): postDeletedPayload!
   login(input: LoginInput!): LoginPayload!
@@ -65,11 +65,10 @@ input createPostGraphQLDTO {
   title: String!
 }
 
-input createUserGraphQLDTO {
+input createUserInput {
   email: String!
   nickname: String!
   password: String!
-  title: String!
 }
 
 type paginatedPostsDTO {

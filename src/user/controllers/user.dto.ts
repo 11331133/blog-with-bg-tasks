@@ -1,10 +1,7 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @InputType()
-export class createUserGraphQLDTO {
-  @Field({ nullable: false })
-  title: string;
-
+export class createUserInput {
   @Field({ nullable: false })
   nickname: string;
 
@@ -13,17 +10,4 @@ export class createUserGraphQLDTO {
 
   @Field({ nullable: false })
   password: string;
-}
-
-@ObjectType()
-export class userDTO {
-  @Field(() => Int)
-  id: number;
-
-  body: string;
-
-  @Field(() => Int)
-  publishedAt: number;
-
-  authorNickname: string;
 }

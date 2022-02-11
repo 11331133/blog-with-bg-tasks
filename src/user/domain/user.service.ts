@@ -1,6 +1,7 @@
 import { createUserDTO } from './user.dto';
 import UserEntity from './user.entity';
 import { IUserRepository } from './userRepository.interface';
+import * as bcrypt from 'bcrypt';
 
 export class UserService {
   constructor(private readonly _userRepository: IUserRepository) {}
@@ -10,10 +11,12 @@ export class UserService {
     email,
     password,
   }: createUserDTO): Promise<UserEntity> {
+    const salt = await bcrypt.genSalt();
+
     return await this._userRepository.create({
       nickname,
       email,
-      passwordHash: 'hashed ' + password,
+      passwordHash: await bcrypt.hash(password, salt),
     });
   }
 
