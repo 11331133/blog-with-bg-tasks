@@ -2,24 +2,24 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Public } from 'src/auth/auth.decorators';
 import { UserService } from '../domain/user.service';
 import { createUserInput } from './user.dto';
-import { UserGraphQLModel } from './user.graphql-model';
+import { User } from './user.graphql-model';
 
-@Resolver(() => UserGraphQLModel)
+@Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
 
-  @Query(() => UserGraphQLModel, { name: 'user', nullable: true })
+  @Query(() => User, { name: 'User', nullable: true })
   async getUser(
     @Args('id', { type: () => Int }) id: number,
-  ): Promise<UserGraphQLModel> {
+  ): Promise<User> {
     return (await this.userService.findByIds([id])).shift();
   }
 
   @Public()
-  @Mutation(() => UserGraphQLModel)
+  @Mutation(() => User)
   async createUser(
-    @Args('input') createUserInput: createUserInput,
-  ): Promise<UserGraphQLModel> {
+    @Args('createUserInput') createUserInput: createUserInput,
+  ): Promise<User> {
     return await this.userService.create(createUserInput);
   }
 }

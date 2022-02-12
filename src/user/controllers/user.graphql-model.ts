@@ -1,8 +1,8 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class UserGraphQLModel {
-  @Field((type) => Int)
+export class User {
+  @Field(() => Int)
   id: number;
 
   @Field({ nullable: false })
