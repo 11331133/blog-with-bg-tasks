@@ -8,6 +8,7 @@ export class CommentMapper {
       body: domainEntity.body,
       authorId: domainEntity.authorId,
       publishedAt: domainEntity.publishedAt,
+      postId: domainEntity.postId
     };
   }
 
@@ -17,6 +18,7 @@ export class CommentMapper {
       body: ormEntity.body,
       authorId: ormEntity.authorId,
       publishedAt: ormEntity.publishedAt,
+      postId: ormEntity.postId
     });
   }
 }

@@ -20,6 +20,9 @@ export class createCommentInput {
 
   @Field(() => GraphQLISODateTime, { nullable: true })
   createdAt?: Date;
+
+  @Field({ nullable: false })
+  postId: string;
 }
 
 @ObjectType()

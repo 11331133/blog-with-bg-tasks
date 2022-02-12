@@ -60,6 +60,7 @@ type User {
 input createCommentInput {
   body: String!
   createdAt: DateTime
+  postId: String!
   title: String!
 }
 

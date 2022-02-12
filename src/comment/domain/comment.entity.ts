@@ -3,22 +3,26 @@ export default class CommentEntity {
   private readonly _body: string;
   private readonly _authorId: string;
   private readonly _publishedAt: Date;
+  private readonly _postId: string;
 
   constructor({
     id,
     body,
     authorId,
     publishedAt,
+    postId,
   }: {
     id: string;
     body: string;
     authorId: string;
     publishedAt: Date;
+    postId: string;
   }) {
     this._id = id;
     this._body = body;
     this._publishedAt = publishedAt;
     this._authorId = authorId;
+    this._postId = postId;
   }
 
   public get id(): string {
@@ -35,5 +39,9 @@ export default class CommentEntity {
 
   public get authorId(): string {
     return this._authorId;
+  }
+
+  public get postId(): string {
+    return this._postId;
   }
 }

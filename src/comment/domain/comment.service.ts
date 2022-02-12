@@ -19,6 +19,7 @@ export class CommentService {
       id: commentId,
       body: dto.body,
       publishedAt: dto.publishedAt || new Date(),
+      postId: dto.postId,
       authorId: userId,
     });
 
@@ -41,6 +42,7 @@ export class CommentService {
       body: editCommentDTO.body,
       authorId: comment.authorId,
       publishedAt: comment.publishedAt,
+      postId: comment.postId,
     });
 
     await this._commentRepository.merge(editedComment);
