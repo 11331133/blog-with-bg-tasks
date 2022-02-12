@@ -1,23 +1,25 @@
 export default class UserEntity {
-  private readonly _id: number;
+  private readonly _id: string;
   private readonly _nickname: string;
   private readonly _email: string;
+  private readonly _password: string;
 
   constructor({
     id,
     nickname,
     email,
   }: {
-    id: number;
+    id: string;
     nickname: string;
     email: string;
+    password?: string;
   }) {
     this._id = id;
     this._nickname = nickname;
     this._email = email;
   }
 
-  public get id(): number {
+  public get id(): string {
     return this._id;
   }
 
@@ -27,5 +29,9 @@ export default class UserEntity {
 
   public get email(): string {
     return this._email;
+  }
+
+  public get password(): string {
+    return this._password;
   }
 }
