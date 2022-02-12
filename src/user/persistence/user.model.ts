@@ -28,8 +28,8 @@ export default class UserModel extends Model {
   passwordHash: string;
 
   @HasMany(() => PostModel)
-  writtenPosts: PostModel[]
+  writtenPosts: PostModel[];
 
   @HasMany(() => CommentModel)
-  writtenComments: CommentModel[]
+  writtenComments: CommentModel[];
 }

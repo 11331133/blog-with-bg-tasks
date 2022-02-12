@@ -24,7 +24,7 @@ export class createCommentInput {
 
 @ObjectType()
 export class createCommentPayload {
-  @Field({ nullable: false})
+  @Field({ nullable: false })
   id: string;
 }
 

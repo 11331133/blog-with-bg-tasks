@@ -26,7 +26,10 @@ export class CommentService {
     return commentId;
   }
 
-  public async editComment(editCommentDTO: editCommentDTO, userId: string): Promise<void> {
+  public async editComment(
+    editCommentDTO: editCommentDTO,
+    userId: string,
+  ): Promise<void> {
     const comment = await this._commentRepository.findOne(editCommentDTO.id);
     // if (comment.authorId !== userId) {
     // if user is not an author, check user's role
@@ -34,10 +37,10 @@ export class CommentService {
     // }
 
     const editedComment = new CommentEntity({
-        id: editCommentDTO.id,
-        body: editCommentDTO.body,
-        authorId: comment.authorId,
-        publishedAt: comment.publishedAt
+      id: editCommentDTO.id,
+      body: editCommentDTO.body,
+      authorId: comment.authorId,
+      publishedAt: comment.publishedAt,
     });
 
     await this._commentRepository.merge(editedComment);

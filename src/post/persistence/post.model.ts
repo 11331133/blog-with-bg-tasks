@@ -1,9 +1,7 @@
 import {
   AllowNull,
-  AutoIncrement,
   Column,
   CreatedAt,
-  BelongsTo,
   Model,
   PrimaryKey,
   Table,
@@ -26,7 +24,6 @@ export default class PostModel extends Model {
   body: string;
 
   @ForeignKey(() => UserModel)
-  // @BelongsTo(() => UserModel)
   @AllowNull(false)
   @Column
   authorId: string;
