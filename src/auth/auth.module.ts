@@ -8,10 +8,14 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from 'src/user/domain/user.service';
-import { IUserRepository } from 'src/user/domain/userRepository.interface';
-import { UserRepository } from 'src/user/persistence/user.persistence';
 import { UserPersistence } from 'src/user/persistence/userPersistence.module';
 import { AuthResolver } from './auth.resolver';
+import { IUserRepository } from 'src/user/domain/IUserRepository';
+import { UserRepository } from 'src/user/persistence/user.repository';
+import { IGenerateId } from 'src/utils/IGenerateId.interface';
+import { IHashPassword } from 'src/utils/IHashPassword.interface';
+import generateId from 'src/utils/GenerateId.adapter';
+import hashPassword from 'src/utils/HashPassword.adapter';
 
 @Module({
   imports: [
@@ -35,10 +39,21 @@ import { AuthResolver } from './auth.resolver';
       useClass: JwtAuthGuard,
     },
     {
+      provide: generateId,
+      useValue: generateId,
+    },
+    {
+      provide: hashPassword,
+      useValue: hashPassword,
+    },
+    {
       provide: UserService,
-      useFactory: (userRepository: IUserRepository) =>
-        new UserService(userRepository),
-      inject: [UserRepository],
+      useFactory: (
+        userRepository: IUserRepository,
+        generateId: IGenerateId,
+        hashPassword: IHashPassword,
+      ) => new UserService(userRepository, generateId, hashPassword),
+      inject: [UserRepository, generateId, hashPassword],
     },
   ],
 })

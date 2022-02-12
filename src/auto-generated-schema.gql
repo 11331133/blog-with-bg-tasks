@@ -37,7 +37,7 @@ type PostGraphQLModel {
 }
 
 type Query {
-  User(id: Int!): User
+  User(id: String!): User
   comment(id: Int!): CommentGraphQLModel
   paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
   post(id: Int!): PostGraphQLModel
@@ -45,7 +45,7 @@ type Query {
 
 type User {
   email: String!
-  id: Int!
+  id: String!
   nickname: String!
 }
 

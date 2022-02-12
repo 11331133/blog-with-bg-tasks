@@ -15,9 +15,9 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    const { user, hashcode } = await this.usersService.findByEmail(email);
+    const user = await this.usersService.findByEmail(email);
 
-    const credentialsAreCorrect = await bcrypt.compare(password, hashcode);
+    const credentialsAreCorrect = await bcrypt.compare(password, user.password);
     if (!credentialsAreCorrect)
       throw new GraphQLError('User credentials are incorrect');
 

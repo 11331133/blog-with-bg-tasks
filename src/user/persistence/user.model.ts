@@ -1,6 +1,5 @@
 import {
   AllowNull,
-  AutoIncrement,
   Column,
   Model,
   PrimaryKey,
@@ -10,7 +9,6 @@ import {
 @Table
 export default class UserModel extends Model {
   @PrimaryKey
-  @AutoIncrement
   @Column
   id: string;
 
@@ -21,4 +19,8 @@ export default class UserModel extends Model {
   @AllowNull(false)
   @Column
   email: string;
+
+  @AllowNull(false)
+  @Column
+  passwordHash: string;
 }
