@@ -20,16 +20,16 @@ type LoginPayload {
 
 type Mutation {
   createComment(input: createCommentGraphQLDTO!): CommentGraphQLModel!
-  createPost(input: createPostGraphQLDTO!): PostGraphQLModel!
+  createPost(input: createPostGraphQLDTO!): Post!
   createUser(createUserInput: createUserInput!): User!
   deleteComment(input: Int!): commentDeletedPayload!
   deletePost(input: Int!): postDeletedPayload!
   login(input: LoginInput!): LoginPayload!
   updateComment(update: updateCommentGraphQLDTO!): CommentGraphQLModel!
-  updatePost(update: updatePostGraphQLDTO!): PostGraphQLModel!
+  updatePost(update: updatePostGraphQLDTO!): Post!
 }
 
-type PostGraphQLModel {
+type Post {
   body: String!
   id: Int!
   publishedAt: Int!
@@ -40,7 +40,7 @@ type Query {
   User(id: String!): User
   comment(id: Int!): CommentGraphQLModel
   paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
-  post(id: Int!): PostGraphQLModel
+  post(id: Int!): Post
 }
 
 type User {
@@ -73,7 +73,7 @@ input createUserInput {
 
 type paginatedPostsDTO {
   isLastPage: Boolean!
-  posts: [PostGraphQLModel!]!
+  posts: [Post!]!
   totalEntities: Int!
   totalPages: Int!
 }

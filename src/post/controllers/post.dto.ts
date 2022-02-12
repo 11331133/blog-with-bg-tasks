@@ -1,6 +1,6 @@
 import { createPostDTO, updatePostDTO } from '../domain/post.dto';
 import { Field, HideField, InputType, Int, ObjectType } from '@nestjs/graphql';
-import { PostGraphQLModel } from './post.graphql-model';
+import { Post } from './post.graphql-model';
 
 @InputType()
 export class createPostGraphQLDTO {
@@ -40,8 +40,8 @@ export class paginationDTO {
 
 @ObjectType()
 export class paginatedPostsDTO {
-  @Field(() => [PostGraphQLModel])
-  posts: PostGraphQLModel[];
+  @Field(() => [Post])
+  posts: Post[];
 
   @Field(() => Int)
   totalPages: number;
