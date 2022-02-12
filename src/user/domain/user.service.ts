@@ -18,7 +18,7 @@ export class UserService {
     const user = new UserEntity({
       id: userId,
       nickname: dto.nickname,
-      email: dto.nickname,
+      email: dto.email,
       password: hashedPassword,
     });
 

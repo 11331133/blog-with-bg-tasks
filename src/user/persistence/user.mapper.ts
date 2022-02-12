@@ -6,7 +6,7 @@ export class UserMapper {
     return {
       id: domainEntity.id,
       nickname: domainEntity.nickname,
-      email: domainEntity.nickname,
+      email: domainEntity.email,
       passwordHash: domainEntity.password,
     };
   }
