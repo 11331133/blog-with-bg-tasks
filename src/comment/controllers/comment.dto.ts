@@ -1,42 +1,50 @@
-import { updateCommentDTO } from '../domain/comment.dto';
-import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import {
+  Field,
+  GraphQLISODateTime,
+  InputType,
+  ObjectType,
+} from '@nestjs/graphql';
+import CommentEntity from '../domain/comment.entity';
+import { Comment } from './comment.graphql-model';
+
+export type CommentParent = Omit<Comment, 'author'> &
+  Pick<CommentEntity, 'authorId'>;
 
 @InputType()
-export class createCommentGraphQLDTO {
+export class createCommentInput {
   @Field({ nullable: false })
   title: string;
 
   @Field({ nullable: false })
   body: string;
 
-  @Field(() => Int, { nullable: true })
-  createdAt?: number;
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  createdAt?: Date;
 }
 
 @ObjectType()
-export class commentDTO {
-  @Field(() => Int)
-  id: number;
-
-  body: string;
-
-  @Field(() => Int)
-  publishedAt: number;
-
-  authorNickname: string;
+export class createCommentPayload {
+  @Field({ nullable: false})
+  id: string;
 }
 
 @InputType()
-export class updateCommentGraphQLDTO extends updateCommentDTO {
-  @Field(() => Int, { nullable: true })
-  id: number;
+export class editCommentInput {
+  @Field({ nullable: false })
+  id: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: false })
   body: string;
 }
 
 @ObjectType()
-export class commentDeletedPayload {
+export class editCommentPayload {
+  @Field()
+  response: boolean;
+}
+
+@ObjectType()
+export class deleteCommentPayload {
   @Field()
   response: boolean;
 }

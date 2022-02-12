@@ -47,6 +47,10 @@ export class CommentService {
     return await this._commentRepository.findByIds(ids);
   }
 
+  public async findOne(id: string): Promise<CommentEntity> {
+    return await this._commentRepository.findOne(id);
+  }
+
   public async deleteComment(id: string): Promise<void> {
     return await this._commentRepository.deleteOne(id);
   }

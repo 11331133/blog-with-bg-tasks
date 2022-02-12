@@ -1,16 +1,17 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/user/controllers/user.graphql-model';
 
 @ObjectType()
-export class CommentGraphQLModel {
-  @Field((type) => Int)
-  id: number;
+export class Comment {
+  @Field({ nullable: false })
+  id: string;
 
   @Field({ nullable: false })
   body: string;
 
-  // @Field(type => Author)
-  // author: Author;
+  @Field(() => User, { nullable: false })
+  author: User;
 
-  @Field((type) => Int)
-  publishedAt: number;
+  @Field(() => GraphQLISODateTime, { nullable: false })
+  publishedAt: Date;
 }

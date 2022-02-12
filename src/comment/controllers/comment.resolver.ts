@@ -1,54 +1,73 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/auth/auth.decorators';
+import userCredentials from 'src/auth/userCredentials.interface';
+import { User } from 'src/user/controllers/user.graphql-model';
+import { UserService } from 'src/user/domain/user.service';
 import { CommentService } from '../domain/comment.service';
 import {
-  createCommentGraphQLDTO,
-  commentDeletedPayload,
-  commentDTO,
-  updateCommentGraphQLDTO,
+  CommentParent,
+  createCommentInput,
+  createCommentPayload,
+  deleteCommentPayload,
+  editCommentInput,
+  editCommentPayload,
 } from './comment.dto';
-import { CommentGraphQLModel } from './comment.graphql-model';
+import { Comment } from './comment.graphql-model';
 
-@Resolver(() => CommentGraphQLModel)
+@Resolver(() => Comment)
 export class CommentResolver {
-  constructor(private commentService: CommentService) {}
+  constructor(
+    private commentService: CommentService,
+    private userService: UserService,
+  ) {}
 
-  // @ResolveField(() => User)
-  // async author(@Parent() coment: CommentGraphQLModel) {}
-
-  @Query(() => CommentGraphQLModel, { name: 'comment', nullable: true })
-  async getComment(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<CommentGraphQLModel> {
-    return (await this.commentService.findByIds([id])).shift();
+  @ResolveField(() => User)
+  async author(@Parent() comment: CommentParent) {
+    return await this.userService.findOne(comment.authorId);
   }
 
-  @Mutation(() => CommentGraphQLModel)
+  @Query(() => Comment, { name: 'Comment', nullable: true })
+  async getComment(@Args('id') id: string): Promise<CommentParent> {
+    return await this.commentService.findOne(id);
+  }
+
+  @Mutation(() => Comment)
   async createComment(
-    @Args('input') createCommentDTO: createCommentGraphQLDTO,
-  ): Promise<CommentGraphQLModel> {
-    return await this.commentService.create(createCommentDTO, 'author');
+    @Args('createCommentInput') createCommentInput: createCommentInput,
+    @CurrentUser() { userId }: userCredentials,
+  ): Promise<createCommentPayload> {
+    const commentId = await this.commentService.createComment(
+      createCommentInput,
+      userId,
+    );
+
+    return {
+      id: commentId,
+    };
   }
 
-  @Mutation(() => CommentGraphQLModel)
-  async updateComment(
-    @Args('update') updateCommentDTO: updateCommentGraphQLDTO,
-  ): Promise<CommentGraphQLModel> {
-    return await this.commentService.update(updateCommentDTO);
+  @Mutation(() => Comment)
+  async editComment(
+    @Args('editCommentInput') editCommentDTO: editCommentInput,
+    @CurrentUser() { userId }: userCredentials,
+  ): Promise<editCommentPayload> {
+    await this.commentService.editComment(editCommentDTO, userId);
+
+    return {
+      response: true,
+    };
   }
 
-  @Mutation(() => commentDeletedPayload)
-  async deleteComment(
-    @Args('input', { type: () => Int }) deleteCommentDTO: number,
-  ): Promise<commentDeletedPayload> {
-    await this.commentService.remove(deleteCommentDTO);
+  @Mutation(() => deleteCommentPayload)
+  async deleteComment(@Args('id') id: string): Promise<deleteCommentPayload> {
+    await this.commentService.deleteComment(id);
 
     return {
       response: true,
