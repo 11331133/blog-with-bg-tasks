@@ -3,7 +3,7 @@ import {
   AutoIncrement,
   Column,
   CreatedAt,
-  ForeignKey,
+  BelongsTo,
   Model,
   PrimaryKey,
   Table,
@@ -25,7 +25,7 @@ export default class PostModel extends Model {
   @Column
   body: string;
 
-  @ForeignKey(() => UserModel)
+  @BelongsTo(() => UserModel)
   @AllowNull(false)
   @Column
   authorId: string;

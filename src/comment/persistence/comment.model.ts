@@ -1,14 +1,16 @@
 import {
   AllowNull,
   AutoIncrement,
+  BelongsTo,
   Column,
   CreatedAt,
-  DataType,
   ForeignKey,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import PostModel from 'src/post/persistence/post.model';
+import UserModel from 'src/user/persistence/user.model';
 
 @Table
 export default class CommentModel extends Model {
@@ -21,10 +23,15 @@ export default class CommentModel extends Model {
   @Column
   body: string;
 
-  // @ForeignKey()
+  @ForeignKey(() => UserModel)
   @AllowNull(false)
   @Column
-  authorId: number;
+  authorId: string;
+
+  @BelongsTo(() => PostModel)
+  @AllowNull(false)
+  @Column
+  postId: string;
 
   @AllowNull(false)
   @CreatedAt

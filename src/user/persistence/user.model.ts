@@ -1,10 +1,13 @@
 import {
   AllowNull,
   Column,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import CommentModel from 'src/comment/persistence/comment.model';
+import PostModel from 'src/post/persistence/post.model';
 
 @Table
 export default class UserModel extends Model {
@@ -23,4 +26,10 @@ export default class UserModel extends Model {
   @AllowNull(false)
   @Column
   passwordHash: string;
+
+  @HasMany(() => PostModel)
+  writtenPosts: PostModel[]
+
+  @HasMany(() => CommentModel)
+  writtenComments: CommentModel[]
 }
