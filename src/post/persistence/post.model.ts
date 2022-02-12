@@ -7,13 +7,13 @@ import {
   Model,
   PrimaryKey,
   Table,
+  ForeignKey,
 } from 'sequelize-typescript';
 import UserModel from 'src/user/persistence/user.model';
 
 @Table
 export default class PostModel extends Model {
   @PrimaryKey
-  @AutoIncrement
   @Column
   id: string;
 
@@ -25,7 +25,8 @@ export default class PostModel extends Model {
   @Column
   body: string;
 
-  @BelongsTo(() => UserModel)
+  @ForeignKey(() => UserModel)
+  // @BelongsTo(() => UserModel)
   @AllowNull(false)
   @Column
   authorId: string;

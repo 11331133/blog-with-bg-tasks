@@ -2,11 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type CommentGraphQLModel {
+type Comment {
+  author: User!
   body: String!
-  id: Int!
-  publishedAt: Int!
+  id: String!
+  publishedAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 input LoginInput {
   email: String!
@@ -19,28 +25,30 @@ type LoginPayload {
 }
 
 type Mutation {
-  createComment(input: createCommentGraphQLDTO!): CommentGraphQLModel!
-  createPost(input: createPostGraphQLDTO!): Post!
+  createComment(createCommentInput: createCommentInput!): Comment!
+  createPost(createPostInput: createPostInput!): Post!
   createUser(createUserInput: createUserInput!): User!
-  deleteComment(input: Int!): commentDeletedPayload!
-  deletePost(input: Int!): postDeletedPayload!
+  deleteComment(id: String!): deleteCommentPayload!
+  deletePost(id: String!): deletePostPayload!
+  editComment(editCommentInput: editCommentInput!): Comment!
+  editPost(editPostInput: editPostInput!): Post!
   login(input: LoginInput!): LoginPayload!
-  updateComment(update: updateCommentGraphQLDTO!): CommentGraphQLModel!
-  updatePost(update: updatePostGraphQLDTO!): Post!
 }
 
 type Post {
+  author: User!
   body: String!
-  id: Int!
-  publishedAt: Int!
+  comments: [Comment!]!
+  id: String!
+  publishedAt: DateTime!
   title: String!
 }
 
 type Query {
+  Comment(id: String!): Comment
+  Post(id: Int!): Post
   User(id: String!): User
-  comment(id: Int!): CommentGraphQLModel
-  paginatedPosts(input: paginationDTO!): paginatedPostsDTO!
-  post(id: Int!): Post
+  paginatedPosts(getPaginatedPostsInput: getPaginatedPostsInput!): getPaginatedPostsPayload!
 }
 
 type User {
@@ -49,19 +57,15 @@ type User {
   nickname: String!
 }
 
-type commentDeletedPayload {
-  response: Boolean!
-}
-
-input createCommentGraphQLDTO {
+input createCommentInput {
   body: String!
-  createdAt: Int
+  createdAt: DateTime
   title: String!
 }
 
-input createPostGraphQLDTO {
+input createPostInput {
   body: String!
-  createdAt: Int
+  publishedAt: DateTime
   title: String!
 }
 
@@ -71,29 +75,33 @@ input createUserInput {
   password: String!
 }
 
-type paginatedPostsDTO {
-  isLastPage: Boolean!
-  posts: [Post!]!
-  totalEntities: Int!
-  totalPages: Int!
+type deleteCommentPayload {
+  response: Boolean!
 }
 
-input paginationDTO {
+type deletePostPayload {
+  response: Boolean!
+}
+
+input editCommentInput {
+  body: String!
+  id: String!
+}
+
+input editPostInput {
+  body: String
+  id: String
+  title: String
+}
+
+input getPaginatedPostsInput {
   page: Int!
   perPage: Int!
 }
 
-type postDeletedPayload {
-  response: Boolean!
-}
-
-input updateCommentGraphQLDTO {
-  body: String
-  id: Int
-}
-
-input updatePostGraphQLDTO {
-  body: String
-  id: Int
-  title: String
+type getPaginatedPostsPayload {
+  isLastPage: Boolean!
+  posts: [Post!]!
+  totalEntities: Int!
+  totalPages: Int!
 }

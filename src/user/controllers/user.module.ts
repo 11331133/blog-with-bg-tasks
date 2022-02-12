@@ -31,5 +31,6 @@ import hashPassword from 'src/utils/HashPassword.adapter';
       inject: [UserRepository, generateId, hashPassword],
     },
   ],
+  exports: [UserService],
 })
 export class UserModule {}

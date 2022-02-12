@@ -1,5 +1,6 @@
 import { Field, ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
 import { User } from 'src/user/controllers/user.graphql-model';
+import { Comment } from 'src/comment/controllers/comment.graphql-model';
 
 @ObjectType()
 export class Post {

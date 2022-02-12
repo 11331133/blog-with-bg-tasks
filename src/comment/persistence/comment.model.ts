@@ -15,7 +15,6 @@ import UserModel from 'src/user/persistence/user.model';
 @Table
 export default class CommentModel extends Model {
   @PrimaryKey
-  @AutoIncrement
   @Column
   id: string;
 
@@ -28,7 +27,8 @@ export default class CommentModel extends Model {
   @Column
   authorId: string;
 
-  @BelongsTo(() => PostModel)
+  @ForeignKey(() => PostModel)
+  // @BelongsTo(() => PostModel)
   @AllowNull(false)
   @Column
   postId: string;
