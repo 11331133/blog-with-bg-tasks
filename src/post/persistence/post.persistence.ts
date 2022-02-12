@@ -1,38 +1,26 @@
 import { InjectModel } from '@nestjs/sequelize';
 import { Paginated } from 'src/utils/paginated.type';
-import { createPostDTO, editPostDTO } from '../domain/post.dto';
-import { IPostRepository } from '../domain/postRepository.interface';
 import PostModel from './post.model';
 import PostEntity from '../domain/post.entity';
 import { Injectable } from '@nestjs/common';
+import { IPostRepository } from '../domain/IPostRepository';
+import { PostMapper } from './post.mapper';
 
 @Injectable()
 export class PostRepository implements IPostRepository {
   constructor(@InjectModel(PostModel) private postModel: typeof PostModel) {}
 
-  async create(
-    { title, body, publishedAt = Date.now() }: createPostDTO,
-    authorNickname: string,
-  ): Promise<PostEntity> {
-    const post = new this.postModel({
-      authorId: 1,
-      title,
-      body,
-      publishedAt: 1,
+  async persist(post: PostEntity): Promise<void> {
+    await this.postModel.create(PostMapper.mapToOrmEntityProperties(post));
+  }
+
+  async merge(post: PostEntity): Promise<void> {
+    await this.postModel.update(PostMapper.mapToOrmEntityProperties, {
+      where: { id: post.id },
     });
-
-    await post.save();
-
-    return new PostEntity(post.id, title, body, authorNickname, publishedAt);
   }
 
-  async update({ id, title, body }: editPostDTO): Promise<PostEntity> {
-    await this.postModel.update({ title, body }, { where: { id } });
-
-    return new PostEntity(id, title, body, null, null);
-  }
-
-  async remove(id: number): Promise<void> {
+  async deleteOne(id: string): Promise<void> {
     await this.postModel.destroy({
       where: {
         id,
@@ -40,17 +28,18 @@ export class PostRepository implements IPostRepository {
     });
   }
 
-  async findByIds(ids: number[]): Promise<PostEntity[]> {
+  async findByIds(ids: string[]): Promise<PostEntity[]> {
     const postModels = await this.postModel.findAll({
       where: {
         id: ids,
       },
     });
 
-    return postModels.map(
-      (model) =>
-        new PostEntity(model.id, model.title, model.body, null, model.publishedAt),
-    );
+    return postModels.map(PostMapper.mapToDomainEntity);
+  }
+
+  async findOne(id: string): Promise<PostEntity> {
+    return await this.findByIds([id]).then((posts) => posts.shift());
   }
 
   async findPaginated(
@@ -67,10 +56,7 @@ export class PostRepository implements IPostRepository {
     return {
       totalPages: Math.floor(totalEntities / pageSize),
       totalEntities,
-      posts: postModels.map(
-        (model) =>
-          new PostEntity(model.id, model.title, model.body, null, model.publishedAt),
-      ),
+      posts: postModels.map(PostMapper.mapToDomainEntity),
     };
   }
 }

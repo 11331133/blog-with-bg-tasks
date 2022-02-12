@@ -3,19 +3,19 @@ import {
   AutoIncrement,
   Column,
   CreatedAt,
-  DataType,
   ForeignKey,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import UserModel from 'src/user/persistence/user.model';
 
 @Table
 export default class PostModel extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column
-  id: number;
+  id: string;
 
   @AllowNull(false)
   @Column
@@ -25,13 +25,13 @@ export default class PostModel extends Model {
   @Column
   body: string;
 
-  // @ForeignKey()
+  @ForeignKey(() => UserModel)
   @AllowNull(false)
   @Column
-  authorId: number;
+  authorId: string;
 
   @AllowNull(false)
   @CreatedAt
   @Column
-  publishedAt: number;
+  publishedAt: Date;
 }
