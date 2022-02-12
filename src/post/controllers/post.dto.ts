@@ -52,7 +52,7 @@ export class getPaginatedPostsInput {
 
 @ObjectType()
 export class getPaginatedPostsPayload {
-  @Field(() => [Post])
+  @Field(() => [Post], { nullable: 'items' })
   posts: PostParent[];
 
   @Field(() => Int)

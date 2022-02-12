@@ -38,7 +38,7 @@ type Mutation {
 type Post {
   author: User!
   body: String!
-  comments: [Comment!]!
+  comments: [Comment]!
   id: String!
   publishedAt: DateTime!
   title: String!
@@ -109,7 +109,7 @@ input getPaginatedPostsInput {
 
 type getPaginatedPostsPayload {
   isLastPage: Boolean!
-  posts: [Post!]!
+  posts: [Post]!
   totalEntities: Int!
   totalPages: Int!
 }

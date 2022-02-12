@@ -16,7 +16,7 @@ export class Post {
   @Field(() => User)
   author: User;
 
-  @Field(() => [Comment])
+  @Field(() => [Comment], { nullable: 'items' })
   comments: Comment[];
 
   @Field(() => GraphQLISODateTime)
