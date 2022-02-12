@@ -8,6 +8,7 @@ export default class UserEntity {
     id,
     nickname,
     email,
+    password
   }: {
     id: string;
     nickname: string;
@@ -17,6 +18,7 @@ export default class UserEntity {
     this._id = id;
     this._nickname = nickname;
     this._email = email;
+    this._password = password;
   }
 
   public get id(): string {
