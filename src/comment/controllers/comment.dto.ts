@@ -13,9 +13,6 @@ export type CommentParent = Omit<Comment, 'author'> &
 @InputType()
 export class createCommentInput {
   @Field({ nullable: false })
-  title: string;
-
-  @Field({ nullable: false })
   body: string;
 
   @Field(() => GraphQLISODateTime, { nullable: true })

@@ -61,7 +61,6 @@ input createCommentInput {
   body: String!
   createdAt: DateTime
   postId: String!
-  title: String!
 }
 
 input createPostInput {
