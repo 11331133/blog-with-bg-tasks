@@ -17,7 +17,7 @@ export default class CommentModel extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column
-  id: number;
+  id: string;
 
   @AllowNull(false)
   @Column
@@ -36,5 +36,5 @@ export default class CommentModel extends Model {
   @AllowNull(false)
   @CreatedAt
   @Column
-  publishedAt: number;
+  publishedAt: Date;
 }
