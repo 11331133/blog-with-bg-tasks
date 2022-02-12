@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CommentModule } from 'src/comment/controllers/comment.module';
 import { UserModule } from 'src/user/controllers/user.module';
 import generateId from 'src/utils/GenerateId.adapter';
 import { IGenerateId } from 'src/utils/IGenerateId.interface';
@@ -9,7 +10,7 @@ import { PostPersistence } from '../persistence/postPersistence.module';
 import { PostResolver } from './post.resolver';
 
 @Module({
-  imports: [UserModule, PostPersistence],
+  imports: [UserModule, CommentModule, PostPersistence],
   providers: [
     PostResolver,
     {

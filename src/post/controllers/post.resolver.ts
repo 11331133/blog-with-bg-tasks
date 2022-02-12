@@ -9,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/auth.decorators';
 import userCredentials from 'src/auth/userCredentials.interface';
+import { CommentService } from 'src/comment/domain/comment.service';
 import { User } from 'src/user/controllers/user.graphql-model';
 import { UserService } from 'src/user/domain/user.service';
 import { PostService } from '../domain/post.service';
@@ -29,6 +30,7 @@ export class PostResolver {
   constructor(
     private postService: PostService,
     private userService: UserService,
+    private commentService: CommentService,
   ) {}
 
   @ResolveField(() => User)
@@ -37,12 +39,12 @@ export class PostResolver {
   }
 
   @ResolveField(() => [Comment])
-  async comments(@Parent() post: PostParent) {}
+  async comments(@Parent() post: PostParent) {
+    return await this.commentService.findByPostId(post.id);
+  }
 
   @Query(() => Post, { name: 'Post', nullable: true })
-  async getPost(
-    @Args('id', { type: () => Int }) id: string,
-  ): Promise<PostParent> {
+  async getPost(@Args('id') id: string): Promise<PostParent> {
     return await this.postService.findOne(id);
   }
 

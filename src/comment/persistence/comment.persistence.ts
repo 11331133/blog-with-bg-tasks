@@ -38,6 +38,16 @@ export class CommentRepository implements ICommentRepository {
     return await this.findByIds([id]).then((comments) => comments.shift());
   }
 
+  async findByPostId(id: string): Promise<CommentEntity[]> {
+    const commentModels = await this.commentModel.findAll({
+      where: {
+        postId: id,
+      },
+    });
+
+    return commentModels.map(CommentMapper.mapToDomainEntity)
+  }
+
   async deleteOne(id: string): Promise<void> {
     await this.commentModel.destroy({
       where: {

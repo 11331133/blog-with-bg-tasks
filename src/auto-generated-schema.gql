@@ -46,7 +46,7 @@ type Post {
 
 type Query {
   Comment(id: String!): Comment
-  Post(id: Int!): Post
+  Post(id: String!): Post
   User(id: String!): User
   paginatedPosts(getPaginatedPostsInput: getPaginatedPostsInput!): getPaginatedPostsPayload!
 }

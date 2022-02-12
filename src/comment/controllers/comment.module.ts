@@ -25,5 +25,6 @@ import { CommentResolver } from './comment.resolver';
       inject: [CommentRepository, generateId],
     },
   ],
+  exports: [CommentService],
 })
 export class CommentModule {}
