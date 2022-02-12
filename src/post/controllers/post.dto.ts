@@ -5,7 +5,11 @@ import {
   ObjectType,
   GraphQLISODateTime,
 } from '@nestjs/graphql';
+import PostEntity from '../domain/post.entity';
 import { Post } from './post.graphql-model';
+
+export type PostParent = Omit<Post, 'author' | 'comments'> &
+  Pick<PostEntity, 'authorId'>;
 
 @InputType()
 export class createPostInput {
@@ -49,7 +53,7 @@ export class getPaginatedPostsInput {
 @ObjectType()
 export class getPaginatedPostsPayload {
   @Field(() => [Post])
-  posts: Omit<Post, 'author' | 'comments'>[];
+  posts: PostParent[];
 
   @Field(() => Int)
   totalPages: number;

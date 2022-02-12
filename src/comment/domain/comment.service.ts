@@ -22,7 +22,9 @@ export class CommentService {
     return await this._commentRepository.findByIds(ids);
   }
 
-  public async update(updateCommentDTO: updateCommentDTO): Promise<CommentEntity> {
+  public async update(
+    updateCommentDTO: updateCommentDTO,
+  ): Promise<CommentEntity> {
     return await this._commentRepository.update(updateCommentDTO);
   }
 

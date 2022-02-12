@@ -10,6 +10,7 @@ import {
 import { CurrentUser } from 'src/auth/auth.decorators';
 import userCredentials from 'src/auth/userCredentials.interface';
 import { User } from 'src/user/controllers/user.graphql-model';
+import { UserService } from 'src/user/domain/user.service';
 import { PostService } from '../domain/post.service';
 import {
   createPostInput,
@@ -19,23 +20,29 @@ import {
   editPostInput,
   createPostPayload,
   editPostPayload,
+  PostParent,
 } from './post.dto';
 import { Post } from './post.graphql-model';
 
 @Resolver(() => Post)
 export class PostResolver {
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    private userService: UserService,
+  ) {}
 
   @ResolveField(() => User)
-  async author(@Parent() post: Post) {}
+  async author(@Parent() post: PostParent) {
+    return await this.userService.findOne(post.authorId);
+  }
 
   @ResolveField(() => [Comment])
-  async comments(@Parent() post: Post) {}
+  async comments(@Parent() post: PostParent) {}
 
   @Query(() => Post, { name: 'Post', nullable: true })
   async getPost(
     @Args('id', { type: () => Int }) id: string,
-  ): Promise<Omit<Post, 'author' | 'comments'>> {
+  ): Promise<PostParent> {
     return await this.postService.findOne(id);
   }
 
