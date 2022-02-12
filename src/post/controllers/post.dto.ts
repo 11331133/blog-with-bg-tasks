@@ -1,36 +1,44 @@
-import { createPostDTO, editPostDTO } from '../domain/post.dto';
-import { Field, HideField, InputType, Int, ObjectType } from '@nestjs/graphql';
+import {
+  Field,
+  InputType,
+  Int,
+  ObjectType,
+  GraphQLISODateTime,
+} from '@nestjs/graphql';
 import { Post } from './post.graphql-model';
 
 @InputType()
-export class createPostGraphQLDTO {
+export class createPostInput {
   @Field({ nullable: false })
   title: string;
 
   @Field({ nullable: false })
   body: string;
 
-  @Field(() => Int, { nullable: true })
-  createdAt?: number;
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  publishedAt?: Date;
 }
 
 @ObjectType()
-export class postDTO {
-  @Field(() => Int)
-  id: number;
+export class createPostPayload {
+  @Field({ nullable: false })
+  id: string;
 
+  @Field({ nullable: false })
   title: string;
 
+  @Field({ nullable: false })
   body: string;
 
-  @Field(() => Int)
-  publishedAt: number;
+  @Field(() => GraphQLISODateTime, { nullable: false })
+  publishedAt: Date;
 
+  @Field({ nullable: false })
   authorNickname: string;
 }
 
 @InputType()
-export class paginationDTO {
+export class getPaginatedPostsInput {
   @Field(() => Int)
   page: number;
 
@@ -39,9 +47,9 @@ export class paginationDTO {
 }
 
 @ObjectType()
-export class paginatedPostsDTO {
+export class getPaginatedPostsPayload {
   @Field(() => [Post])
-  posts: Post[];
+  posts: Omit<Post, 'author' | 'comments'>[];
 
   @Field(() => Int)
   totalPages: number;
@@ -54,9 +62,9 @@ export class paginatedPostsDTO {
 }
 
 @InputType()
-export class updatePostGraphQLDTO extends editPostDTO {
-  @Field(() => Int, { nullable: true })
-  id: number;
+export class editPostInput {
+  @Field({ nullable: true })
+  id: string;
 
   @Field({ nullable: true })
   title: string;
@@ -66,7 +74,13 @@ export class updatePostGraphQLDTO extends editPostDTO {
 }
 
 @ObjectType()
-export class postDeletedPayload {
+export class editPostPayload {
+  @Field()
+  response: boolean;
+}
+
+@ObjectType()
+export class deletePostPayload {
   @Field()
   response: boolean;
 }

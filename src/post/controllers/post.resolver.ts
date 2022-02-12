@@ -7,14 +7,18 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import {User} from 'src/user/controllers/user.graphql-model';
+import { CurrentUser } from 'src/auth/auth.decorators';
+import userCredentials from 'src/auth/userCredentials.interface';
+import { User } from 'src/user/controllers/user.graphql-model';
 import { PostService } from '../domain/post.service';
 import {
-  createPostGraphQLDTO,
-  paginatedPostsDTO,
-  paginationDTO,
-  postDeletedPayload,
-  updatePostGraphQLDTO,
+  createPostInput,
+  getPaginatedPostsPayload,
+  getPaginatedPostsInput,
+  deletePostPayload,
+  editPostInput,
+  createPostPayload,
+  editPostPayload,
 } from './post.dto';
 import { Post } from './post.graphql-model';
 
@@ -30,15 +34,15 @@ export class PostResolver {
 
   @Query(() => Post, { name: 'Post', nullable: true })
   async getPost(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<Post> {
-    return (await this.postService.findByIds([id])).shift();
+    @Args('id', { type: () => Int }) id: string,
+  ): Promise<Omit<Post, 'author' | 'comments'>> {
+    return await this.postService.findOne(id);
   }
 
-  @Query(() => paginatedPostsDTO, { name: 'paginatedPosts' })
+  @Query(() => getPaginatedPostsPayload, { name: 'paginatedPosts' })
   async getPaginatedPosts(
-    @Args('input') { page, perPage }: paginationDTO,
-  ): Promise<paginatedPostsDTO> {
+    @Args('getPaginatedPostsInput') { page, perPage }: getPaginatedPostsInput,
+  ): Promise<getPaginatedPostsPayload> {
     const { posts, totalPages, totalEntities } =
       await this.postService.findPaginated(page, perPage);
 
@@ -52,23 +56,35 @@ export class PostResolver {
 
   @Mutation(() => Post)
   async createPost(
-    @Args('input') createPostDTO: createPostGraphQLDTO,
-  ): Promise<Post> {
-    return await this.postService.create(createPostDTO, 'author');
+    @Args('createPostInput') createPostInput: createPostInput,
+    @CurrentUser() { userName }: userCredentials,
+  ): Promise<createPostPayload> {
+    const postId = await this.postService.createPost(createPostInput, 'author');
+
+    return {
+      id: postId,
+      title: createPostInput.title,
+      body: createPostInput.body,
+      authorNickname: userName,
+      publishedAt: createPostInput.publishedAt || new Date(),
+    };
   }
 
   @Mutation(() => Post)
-  async updatePost(
-    @Args('update') updatePostDTO: updatePostGraphQLDTO,
-  ): Promise<Post> {
-    return await this.postService.update(updatePostDTO);
+  async editPost(
+    @Args('editPostInput') editPostInput: editPostInput,
+    @CurrentUser() user: userCredentials,
+  ): Promise<editPostPayload> {
+    await this.postService.editPost(editPostInput, user.userId);
+
+    return {
+      response: true,
+    };
   }
 
-  @Mutation(() => postDeletedPayload)
-  async deletePost(
-    @Args('input', { type: () => Int }) deletePostDTO: number,
-  ): Promise<postDeletedPayload> {
-    await this.postService.remove(deletePostDTO);
+  @Mutation(() => deletePostPayload)
+  async deletePost(@Args('id') postId: string): Promise<deletePostPayload> {
+    await this.postService.deletePost(postId);
 
     return {
       response: true,
