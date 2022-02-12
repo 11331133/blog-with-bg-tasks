@@ -1,9 +1,9 @@
 export abstract class createCommentDTO {
   body: string;
-  publishedAt?: number;
+  publishedAt?: Date;
 }
 
-export abstract class updateCommentDTO {
-  id: number;
+export abstract class editCommentDTO {
+  id: string;
   body: string;
 }
