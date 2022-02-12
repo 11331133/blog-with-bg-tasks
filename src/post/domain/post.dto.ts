@@ -1,11 +1,11 @@
 export abstract class createPostDTO {
   title: string;
   body: string;
-  publishedAt?: number;
+  publishedAt?: Date;
 }
 
-export abstract class updatePostDTO {
-  id: number;
+export abstract class editPostDTO {
+  id: string;
   title: string;
   body: string;
 }

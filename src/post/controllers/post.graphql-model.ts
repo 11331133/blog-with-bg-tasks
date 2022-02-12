@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
 import { User } from 'src/user/controllers/user.graphql-model';
 
 @ObjectType()
@@ -18,6 +18,6 @@ export class Post {
   @Field(() => [Comment])
   comments: Comment[];
 
-  @Field(() => Int)
-  publishedAt: number;
+  @Field(() => GraphQLISODateTime)
+  publishedAt: Date;
 }

@@ -1,6 +1,6 @@
 import { InjectModel } from '@nestjs/sequelize';
 import { Paginated } from 'src/utils/paginated.type';
-import { createPostDTO, updatePostDTO } from '../domain/post.dto';
+import { createPostDTO, editPostDTO } from '../domain/post.dto';
 import { IPostRepository } from '../domain/postRepository.interface';
 import PostModel from './post.model';
 import PostEntity from '../domain/post.entity';
@@ -26,7 +26,7 @@ export class PostRepository implements IPostRepository {
     return new PostEntity(post.id, title, body, authorNickname, publishedAt);
   }
 
-  async update({ id, title, body }: updatePostDTO): Promise<PostEntity> {
+  async update({ id, title, body }: editPostDTO): Promise<PostEntity> {
     await this.postModel.update({ title, body }, { where: { id } });
 
     return new PostEntity(id, title, body, null, null);

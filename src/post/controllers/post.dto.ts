@@ -1,4 +1,4 @@
-import { createPostDTO, updatePostDTO } from '../domain/post.dto';
+import { createPostDTO, editPostDTO } from '../domain/post.dto';
 import { Field, HideField, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Post } from './post.graphql-model';
 
@@ -54,7 +54,7 @@ export class paginatedPostsDTO {
 }
 
 @InputType()
-export class updatePostGraphQLDTO extends updatePostDTO {
+export class updatePostGraphQLDTO extends editPostDTO {
   @Field(() => Int, { nullable: true })
   id: number;
 

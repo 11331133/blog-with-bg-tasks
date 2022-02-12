@@ -1,13 +1,31 @@
 export default class PostEntity {
-  constructor(
-    private _id: number,
-    private _title: string,
-    private _body: string,
-    private _authorNickname: string,
-    private _publishedAt: number,
-  ) {}
+  private _id: string;
+  private _title: string;
+  private _body: string;
+  private _authorId: string;
+  private _publishedAt: Date;
 
-  public get id(): number {
+  constructor({
+    id,
+    title,
+    body,
+    authorId,
+    publishedAt,
+  }: {
+    id: string;
+    title: string;
+    body: string;
+    authorId: string;
+    publishedAt: Date;
+  }) {
+    this._id = id;
+    this._title = title;
+    this._body = body;
+    this._authorId = authorId;
+    this._publishedAt = publishedAt;
+  }
+
+  public get id(): string {
     return this._id;
   }
 
@@ -19,11 +37,11 @@ export default class PostEntity {
     return this._body;
   }
 
-  public get authorNickname(): string {
-    return this._authorNickname;
+  public get authorId(): string {
+    return this._authorId;
   }
 
-  public get publishedAt(): number {
+  public get publishedAt(): Date {
     return this._publishedAt;
   }
 }
