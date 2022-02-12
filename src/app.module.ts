@@ -9,6 +9,7 @@ import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { Dialect } from 'sequelize/dist';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 @Module({
   imports: [
@@ -19,6 +20,8 @@ import { Dialect } from 'sequelize/dist';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/auto-generated-schema.gql'),
       sortSchema: true,
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     SequelizeModule.forRootAsync({
       inject: [ConfigService],
