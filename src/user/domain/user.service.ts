@@ -48,7 +48,15 @@ export class UserService {
     return await this._userRepository.findByIds(ids);
   }
 
+  public async findOne(id: string): Promise<UserEntity> {
+    return await this._userRepository.findOne(id);
+  }
+
   public async findByEmail(email: string): Promise<UserEntity> {
     return await this._userRepository.findByEmail(email);
+  }
+
+  public async deleteOne(id: string): Promise<void> {
+    return await this._userRepository.deleteOne(id);
   }
 }

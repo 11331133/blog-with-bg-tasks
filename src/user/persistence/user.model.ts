@@ -2,7 +2,6 @@ import {
   AllowNull,
   AutoIncrement,
   Column,
-  CreatedAt,
   Model,
   PrimaryKey,
   Table,
@@ -22,9 +21,4 @@ export default class UserModel extends Model {
   @AllowNull(false)
   @Column
   email: string;
-
-  @AllowNull(false)
-  @CreatedAt
-  @Column
-  passwordHash: string;
 }
