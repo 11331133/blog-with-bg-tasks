@@ -3,8 +3,6 @@ import {
   AutoIncrement,
   Column,
   CreatedAt,
-  DataType,
-  ForeignKey,
   Model,
   PrimaryKey,
   Table,
@@ -15,7 +13,7 @@ export default class UserModel extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column
-  id: number;
+  id: string;
 
   @AllowNull(false)
   @Column
