@@ -33,6 +33,7 @@
     "apollo-server-express": "^3.6.2",
     "bcrypt": "^5.0.1",
     "graphql": "^15.8.0",
+    "nanoid": "^3.2.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
