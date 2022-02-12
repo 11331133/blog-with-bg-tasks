@@ -63,12 +63,12 @@ export class PostResolver {
     };
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => createPostPayload)
   async createPost(
     @Args('createPostInput') createPostInput: createPostInput,
-    @CurrentUser() { userName }: userCredentials,
+    @CurrentUser() { userId, userName }: userCredentials,
   ): Promise<createPostPayload> {
-    const postId = await this.postService.createPost(createPostInput, 'author');
+    const postId = await this.postService.createPost(createPostInput, userId);
 
     return {
       id: postId,
