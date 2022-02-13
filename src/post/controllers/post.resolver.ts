@@ -79,7 +79,7 @@ export class PostResolver {
     };
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => editPostPayload)
   async editPost(
     @Args('editPostInput') editPostInput: editPostInput,
     @CurrentUser() user: userCredentials,

@@ -25,13 +25,13 @@ type LoginPayload {
 }
 
 type Mutation {
-  createComment(createCommentInput: createCommentInput!): Comment!
+  createComment(createCommentInput: createCommentInput!): createCommentPayload!
   createPost(createPostInput: createPostInput!): createPostPayload!
   createUser(createUserInput: createUserInput!): User!
   deleteComment(id: String!): deleteCommentPayload!
   deletePost(id: String!): deletePostPayload!
-  editComment(editCommentInput: editCommentInput!): Comment!
-  editPost(editPostInput: editPostInput!): Post!
+  editComment(editCommentInput: editCommentInput!): editCommentPayload!
+  editPost(editPostInput: editPostInput!): editPostPayload!
   login(input: LoginInput!): LoginPayload!
 }
 
@@ -61,6 +61,10 @@ input createCommentInput {
   body: String!
   createdAt: DateTime
   postId: String!
+}
+
+type createCommentPayload {
+  id: String!
 }
 
 input createPostInput {
@@ -96,10 +100,18 @@ input editCommentInput {
   id: String!
 }
 
+type editCommentPayload {
+  response: Boolean!
+}
+
 input editPostInput {
   body: String
   id: String
   title: String
+}
+
+type editPostPayload {
+  response: Boolean!
 }
 
 input getPaginatedPostsInput {

@@ -38,7 +38,7 @@ export class CommentResolver {
     return await this.commentService.findOne(id);
   }
 
-  @Mutation(() => Comment)
+  @Mutation(() => createCommentPayload)
   async createComment(
     @Args('createCommentInput') createCommentInput: createCommentInput,
     @CurrentUser() { userId }: userCredentials,
@@ -53,7 +53,7 @@ export class CommentResolver {
     };
   }
 
-  @Mutation(() => Comment)
+  @Mutation(() => editCommentPayload)
   async editComment(
     @Args('editCommentInput') editCommentDTO: editCommentInput,
     @CurrentUser() { userId }: userCredentials,
