@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CommentModule } from 'src/comment/controllers/comment.module';
 import { UserModule } from 'src/user/controllers/user.module';
 import { BlogLoader } from 'src/utils/blog.loader';
@@ -26,5 +26,6 @@ import { PostResolver } from './post.resolver';
     },
     BlogLoader,
   ],
+  exports: [PostService]
 })
 export class PostModule {}

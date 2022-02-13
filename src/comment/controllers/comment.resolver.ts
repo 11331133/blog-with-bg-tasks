@@ -9,7 +9,7 @@ import {
 import { CurrentUser } from 'src/auth/auth.decorators';
 import userCredentials from 'src/auth/userCredentials.interface';
 import { User } from 'src/user/controllers/user.graphql-model';
-import { UserService } from 'src/user/domain/user.service';
+import { BlogLoader } from 'src/utils/blog.loader';
 import { CommentService } from '../domain/comment.service';
 import {
   CommentParent,
@@ -25,12 +25,12 @@ import { Comment } from './comment.graphql-model';
 export class CommentResolver {
   constructor(
     private commentService: CommentService,
-    private userService: UserService,
+    private blogLoader: BlogLoader,
   ) {}
 
   @ResolveField(() => User)
   async author(@Parent() comment: CommentParent) {
-    return await this.userService.findOne(comment.authorId);
+    return await this.blogLoader.users.load(comment.authorId);
   }
 
   @Query(() => Comment, { name: 'Comment', nullable: true })
