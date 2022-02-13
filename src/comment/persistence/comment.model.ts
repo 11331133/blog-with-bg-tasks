@@ -1,6 +1,5 @@
 import {
   AllowNull,
-  AutoIncrement,
   BelongsTo,
   Column,
   CreatedAt,
@@ -28,7 +27,6 @@ export default class CommentModel extends Model {
   authorId: string;
 
   @ForeignKey(() => PostModel)
-  // @BelongsTo(() => PostModel)
   @AllowNull(false)
   @Column
   postId: string;
@@ -37,4 +35,7 @@ export default class CommentModel extends Model {
   @CreatedAt
   @Column
   publishedAt: Date;
+
+  @BelongsTo(() => PostModel)
+  post: PostModel[]
 }

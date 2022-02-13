@@ -6,7 +6,9 @@ import {
   PrimaryKey,
   Table,
   ForeignKey,
+  HasMany,
 } from 'sequelize-typescript';
+import CommentModel from 'src/comment/persistence/comment.model';
 import UserModel from 'src/user/persistence/user.model';
 
 @Table
@@ -32,4 +34,7 @@ export default class PostModel extends Model {
   @CreatedAt
   @Column
   publishedAt: Date;
+
+  @HasMany(() => CommentModel)
+  comments: CommentModel[]
 }
