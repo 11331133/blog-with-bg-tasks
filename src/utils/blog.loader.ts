@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import * as DataLoader from 'dataloader';
 import { Injectable, Scope } from '@nestjs/common';
 import UserEntity from '../user/domain/user.entity';
@@ -20,7 +20,7 @@ export class BlogLoader {
     async (userIds: string[]) => {
       const users = await this.userService.findByIds(userIds);
 
-      return BlogLoader.mapIdToEntity(userIds, users);
+      return this.mapIdToEntity(userIds, users);
     },
   );
 
@@ -28,7 +28,7 @@ export class BlogLoader {
     async (postIds: string[]) => {
       const posts = await this.postService.findByIds(postIds);
 
-      return BlogLoader.mapIdToEntity(postIds, posts);
+      return this.mapIdToEntity(postIds, posts);
     },
   );
 
@@ -36,18 +36,30 @@ export class BlogLoader {
     async (postIds: string[]) => {
       const comments = await this.commentService.findByPostIds(postIds);
 
-      const map = _.groupBy(comments, (comment: CommentEntity) => comment.postId);
-
-      return postIds.map(postId => map[postId] || []);
+      return this.mapIdToEntityGroup(
+        postIds,
+        comments,
+        (comment: CommentEntity) => comment.postId,
+      );
     },
   );
 
-  private static mapIdToEntity<T extends Record<'id', string>>(
+  private mapIdToEntity<T extends Record<'id', string>>(
     ids: string[],
     entities: T[],
   ): T[] {
-    const map = _.keyBy(entities, entity => entity.id);
+    const map = _.keyBy(entities, (entity) => entity.id);
 
     return ids.map((id) => map[id]);
+  }
+
+  private mapIdToEntityGroup<T>(
+    ids: string[],
+    entities: T[],
+    groupIdGetter: (entity: T) => string,
+  ): T[][] {
+    const map = _.groupBy(entities, groupIdGetter);
+
+    return ids.map((id) => map[id] || []);
   }
 }
