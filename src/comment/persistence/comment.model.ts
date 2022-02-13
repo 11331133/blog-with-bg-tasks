@@ -7,6 +7,8 @@ import {
   Model,
   PrimaryKey,
   Table,
+  DataType,
+  Index
 } from 'sequelize-typescript';
 import PostModel from 'src/post/persistence/post.model';
 import UserModel from 'src/user/persistence/user.model';
@@ -14,23 +16,25 @@ import UserModel from 'src/user/persistence/user.model';
 @Table
 export default class CommentModel extends Model {
   @PrimaryKey
-  @Column
+  @Column(DataType.STRING(21))
   id: string;
 
   @AllowNull(false)
-  @Column
+  @Column(DataType.TEXT)
   body: string;
 
   @ForeignKey(() => UserModel)
   @AllowNull(false)
-  @Column
+  @Column(DataType.STRING(21))
   authorId: string;
 
+  @Index
   @ForeignKey(() => PostModel)
   @AllowNull(false)
-  @Column
+  @Column(DataType.STRING(21))
   postId: string;
 
+  @Index
   @AllowNull(false)
   @CreatedAt
   @Column

@@ -1,7 +1,9 @@
 import {
   AllowNull,
   Column,
+  DataType,
   HasMany,
+  Index,
   Model,
   PrimaryKey,
   Table,
@@ -12,13 +14,14 @@ import PostModel from 'src/post/persistence/post.model';
 @Table
 export default class UserModel extends Model {
   @PrimaryKey
-  @Column
+  @Column(DataType.STRING(21))
   id: string;
 
   @AllowNull(false)
   @Column
   nickname: string;
 
+  @Index
   @AllowNull(false)
   @Column
   email: string;
