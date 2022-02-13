@@ -52,14 +52,17 @@ export class PostResolver {
   async getPaginatedPosts(
     @Args('getPaginatedPostsInput') { page, perPage }: getPaginatedPostsInput,
   ): Promise<getPaginatedPostsPayload> {
-    const { posts, totalPages, totalEntities } =
-      await this.postService.findPaginated(page, perPage);
+    const { posts, totalPages, totalEntities, isLastPage } =
+      await this.postService.findPaginated(
+        Math.max(page, 1),
+        Math.max(perPage, 1),
+      );
 
     return {
       posts,
       totalPages,
       totalEntities,
-      isLastPage: page >= totalPages,
+      isLastPage,
     };
   }
 

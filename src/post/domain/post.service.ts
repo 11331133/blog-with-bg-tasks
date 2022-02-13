@@ -57,10 +57,18 @@ export class PostService {
     pageNo: number,
     pageSize: number,
   ): Promise<Paginated<PostEntity, 'posts'>> {
-    return await this._postRepository.findPaginated(
-      Math.max(pageNo, 0),
-      Math.max(pageSize, 1),
+    const { posts, totalEntities } = await this._postRepository.findPaginated(
+      pageNo,
+      pageSize,
     );
+    const totalPages = Math.ceil(totalEntities / pageSize);
+
+    return {
+      totalPages,
+      totalEntities: totalEntities,
+      isLastPage: pageNo === totalPages,
+      posts,
+    };
   }
 
   public async deletePost(id: string): Promise<void> {

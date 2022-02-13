@@ -45,7 +45,7 @@ export class PostRepository implements IPostRepository {
   async findPaginated(
     pageNo: number,
     pageSize: number,
-  ): Promise<Paginated<PostEntity, 'posts'>> {
+  ): Promise<{ posts: PostEntity[]; totalEntities: number }> {
     const { count: totalEntities, rows: postModels } =
       await this.postModel.findAndCountAll({
         order: ['publishedAt'],
@@ -54,7 +54,6 @@ export class PostRepository implements IPostRepository {
       });
 
     return {
-      totalPages: Math.floor(totalEntities / pageSize),
       totalEntities,
       posts: postModels.map(PostMapper.mapToDomainEntity),
     };
