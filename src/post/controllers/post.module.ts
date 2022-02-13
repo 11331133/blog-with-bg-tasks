@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CommentModule } from 'src/comment/controllers/comment.module';
 import { UserModule } from 'src/user/controllers/user.module';
+import { BlogLoader } from 'src/utils/blog.loader';
 import generateId from 'src/utils/GenerateId.adapter';
 import { IGenerateId } from 'src/utils/IGenerateId.interface';
 import { IPostRepository } from '../domain/IPostRepository';
@@ -23,6 +24,7 @@ import { PostResolver } from './post.resolver';
         new PostService(postRepository, generateId),
       inject: [PostRepository, generateId],
     },
+    BlogLoader,
   ],
 })
 export class PostModule {}

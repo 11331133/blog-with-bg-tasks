@@ -1,11 +1,12 @@
+import * as _ from "lodash";
+import * as DataLoader from 'dataloader';
+import { Injectable, Scope } from '@nestjs/common';
 import UserEntity from '../user/domain/user.entity';
 import PostEntity from '../post/domain/post.entity';
 import CommentEntity from '../comment/domain/comment.entity';
 import { UserService } from '../user/domain/user.service';
 import { PostService } from '../post/domain/post.service';
 import { CommentService } from '../comment/domain/comment.service';
-import * as DataLoader from 'dataloader';
-import { Injectable, Scope } from '@nestjs/common';
 
 @Injectable({ scope: Scope.REQUEST })
 export class BlogLoader {
@@ -31,11 +32,13 @@ export class BlogLoader {
     },
   );
 
-  public readonly comments = new DataLoader<string, CommentEntity>(
-    async (commentIds: string[]) => {
-      const comments = await this.commentService.findByIds(commentIds);
+  public readonly commentsByPostIds = new DataLoader<string, CommentEntity[]>(
+    async (postIds: string[]) => {
+      const comments = await this.commentService.findByPostIds(postIds);
 
-      return BlogLoader.mapIdToEntity(commentIds, comments);
+      const map = _.groupBy(comments, (comment: CommentEntity) => comment.postId);
+
+      return postIds.map(postId => map[postId] || []);
     },
   );
 
@@ -43,8 +46,8 @@ export class BlogLoader {
     ids: string[],
     entities: T[],
   ): T[] {
-    const map = new Map(entities.map((entity) => [entity.id, entity]));
+    const map = _.keyBy(entities, entity => entity.id);
 
-    return ids.map((id) => map.get(id));
+    return ids.map((id) => map[id]);
   }
 }

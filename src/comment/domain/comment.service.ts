@@ -56,8 +56,8 @@ export class CommentService {
     return await this._commentRepository.findOne(id);
   }
 
-  public async findByPostId(id: string): Promise<CommentEntity[]> {
-    return await this._commentRepository.findByPostId(id);
+  public async findByPostIds(ids: string[]): Promise<CommentEntity[]> {
+    return await this._commentRepository.findByPostIds(ids);
   }
 
   public async deleteComment(id: string): Promise<void> {

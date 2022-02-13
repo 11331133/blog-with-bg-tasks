@@ -24,6 +24,16 @@ export class CommentRepository implements ICommentRepository {
     );
   }
 
+  async findByPostIds(postIds: string[]): Promise<CommentEntity[]> {
+    const commentModels = await this.commentModel.findAll({
+      where: {
+        postId: postIds,
+      },
+    });
+
+    return commentModels.map(CommentMapper.mapToDomainEntity);
+  }
+
   async findByIds(ids: string[]): Promise<CommentEntity[]> {
     const commentModels = await this.commentModel.findAll({
       where: {
@@ -36,16 +46,6 @@ export class CommentRepository implements ICommentRepository {
 
   async findOne(id: string): Promise<CommentEntity> {
     return await this.findByIds([id]).then((comments) => comments.shift());
-  }
-
-  async findByPostId(id: string): Promise<CommentEntity[]> {
-    const commentModels = await this.commentModel.findAll({
-      where: {
-        postId: id,
-      },
-    });
-
-    return commentModels.map(CommentMapper.mapToDomainEntity)
   }
 
   async deleteOne(id: string): Promise<void> {

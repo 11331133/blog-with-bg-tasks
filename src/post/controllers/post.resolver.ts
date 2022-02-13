@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -9,9 +8,8 @@ import {
 } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/auth.decorators';
 import userCredentials from 'src/auth/userCredentials.interface';
-import { CommentService } from 'src/comment/domain/comment.service';
 import { User } from 'src/user/controllers/user.graphql-model';
-import { UserService } from 'src/user/domain/user.service';
+import { BlogLoader } from 'src/utils/blog.loader';
 import { PostService } from '../domain/post.service';
 import {
   createPostInput,
@@ -29,23 +27,22 @@ import { Post } from './post.graphql-model';
 export class PostResolver {
   constructor(
     private postService: PostService,
-    private userService: UserService,
-    private commentService: CommentService,
+    private blogLoader: BlogLoader,
   ) {}
 
   @ResolveField(() => User)
   async author(@Parent() post: PostParent) {
-    return await this.userService.findOne(post.authorId);
+    return await this.blogLoader.users.load(post.authorId);
   }
 
   @ResolveField(() => [Comment])
   async comments(@Parent() post: PostParent) {
-    return await this.commentService.findByPostId(post.id);
+    return await this.blogLoader.commentsByPostIds.load(post.id);
   }
 
   @Query(() => Post, { name: 'Post', nullable: true })
   async getPost(@Args('id') id: string): Promise<PostParent> {
-    return await this.postService.findOne(id);
+    return await this.blogLoader.posts.load(id);
   }
 
   @Query(() => getPaginatedPostsPayload, { name: 'paginatedPosts' })
