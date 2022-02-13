@@ -20,7 +20,7 @@ export class BlogLoader {
     async (userIds: string[]) => {
       const users = await this.userService.findByIds(userIds);
 
-      return this.mapIdToEntity(userIds, users);
+      return this.mapIdsToEntities(userIds, users);
     },
   );
 
@@ -28,7 +28,7 @@ export class BlogLoader {
     async (postIds: string[]) => {
       const posts = await this.postService.findByIds(postIds);
 
-      return this.mapIdToEntity(postIds, posts);
+      return this.mapIdsToEntities(postIds, posts);
     },
   );
 
@@ -36,7 +36,7 @@ export class BlogLoader {
     async (postIds: string[]) => {
       const comments = await this.commentService.findByPostIds(postIds);
 
-      return this.mapIdToEntityGroup(
+      return this.mapIdsToEntityGroups(
         postIds,
         comments,
         (comment: CommentEntity) => comment.postId,
@@ -44,7 +44,7 @@ export class BlogLoader {
     },
   );
 
-  private mapIdToEntity<T extends Record<'id', string>>(
+  private mapIdsToEntities<T extends Record<'id', string>>(
     ids: string[],
     entities: T[],
   ): T[] {
@@ -53,7 +53,7 @@ export class BlogLoader {
     return ids.map((id) => map[id]);
   }
 
-  private mapIdToEntityGroup<T>(
+  private mapIdsToEntityGroups<T>(
     ids: string[],
     entities: T[],
     groupIdGetter: (entity: T) => string,
