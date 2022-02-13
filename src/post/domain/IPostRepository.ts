@@ -6,5 +6,5 @@ export interface IPostRepository extends IBaseRepository<PostEntity> {
   findPaginated(
     pageNo: number,
     pageSize: number,
-  ): Promise<{ posts: PostEntity[], totalEntities: number }>;
+  ): Promise<{ posts: PostEntity[]; totalEntities: number }>;
 }

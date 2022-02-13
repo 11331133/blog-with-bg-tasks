@@ -8,7 +8,7 @@ import {
   PrimaryKey,
   Table,
   DataType,
-  Index
+  Index,
 } from 'sequelize-typescript';
 import PostModel from 'src/post/persistence/post.model';
 import UserModel from 'src/user/persistence/user.model';
@@ -41,5 +41,5 @@ export default class CommentModel extends Model {
   publishedAt: Date;
 
   @BelongsTo(() => PostModel)
-  post: PostModel[]
+  post: PostModel[];
 }

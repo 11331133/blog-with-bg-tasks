@@ -1,5 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
-import {PostModule} from 'src/post/controllers/post.module';
+import { PostModule } from 'src/post/controllers/post.module';
 import { UserModule } from 'src/user/controllers/user.module';
 import { BlogLoader } from 'src/utils/blog.loader';
 import generateId from 'src/utils/GenerateId.adapter';
@@ -26,7 +26,7 @@ import { CommentResolver } from './comment.resolver';
       ) => new CommentService(commentRepository, generateId),
       inject: [CommentRepository, generateId],
     },
-    BlogLoader
+    BlogLoader,
   ],
   exports: [CommentService],
 })

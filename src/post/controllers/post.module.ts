@@ -26,6 +26,6 @@ import { PostResolver } from './post.resolver';
     },
     BlogLoader,
   ],
-  exports: [PostService]
+  exports: [PostService],
 })
 export class PostModule {}

@@ -8,7 +8,7 @@ export default class UserEntity {
     id,
     nickname,
     email,
-    password
+    password,
   }: {
     id: string;
     nickname: string;
